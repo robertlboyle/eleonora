@@ -1,4 +1,4 @@
-# Builds Eudora's Windows installer: dist\Eudora-Setup-<version>.exe (Inno Setup 6, as
+# Builds Eleonora's Windows installer: dist\Eleonora-Setup-<version>.exe (Inno Setup 6, as
 # PlanetPDF's).
 #
 #   .\scripts\build-installer.ps1            # build the programs, then the installer
@@ -22,16 +22,16 @@ $version = (Select-String -Path (Join-Path $root 'Cargo.toml') -Pattern '^versio
 if (-not $version) { throw 'No version in Cargo.toml' }
 
 $target = if ($Arch -eq 'arm64') { 'aarch64-pc-windows-msvc' } else { $null }
-Write-Output "Step 1 of 3: building Eudora $version for $Arch (eudora, eudora-cli, eudora-web)"
+Write-Output "Step 1 of 3: building Eleonora $version for $Arch (eleonora, eleonora-cli, eleonora-web)"
 if (-not $NoBuild) {
     Push-Location $root
     try {
         # (through cmd: PowerShell takes cargo's progress lines on stderr for errors)
         if ($target) {
             if (Test-Path "$env:ProgramFiles\LLVM\bin") { $env:PATH = "$env:ProgramFiles\LLVM\bin;$env:PATH" }
-            cmd /c "cargo build --release --target $target -p eudora-app -p eudora-cli -p eudora-web 2>&1"
+            cmd /c "cargo build --release --target $target -p eleonora-app -p eleonora-cli -p eleonora-web 2>&1"
         } else {
-            cmd /c "cargo build --release -p eudora-app -p eudora-cli -p eudora-web 2>&1"
+            cmd /c "cargo build --release -p eleonora-app -p eleonora-cli -p eleonora-web 2>&1"
         }
         if ($LASTEXITCODE -ne 0) { throw 'The build failed.' }
     } finally { Pop-Location }
@@ -42,12 +42,12 @@ $build = if ($target) { Join-Path $root "target\$target\release" } else { Join-P
 $stage = Join-Path $root 'target\installer\stage'
 if (Test-Path $stage) { Remove-Item $stage -Recurse -Force }
 New-Item -ItemType Directory -Force $stage | Out-Null
-foreach ($name in 'eudora.exe', 'eudora-cli.exe', 'eudora-web.exe') {
+foreach ($name in 'eleonora.exe', 'eleonora-cli.exe', 'eleonora-web.exe') {
     $from = Join-Path $build $name
     if (-not (Test-Path $from)) { throw "$from isn't built (run without -NoBuild)" }
     Copy-Item $from $stage
 }
-Copy-Item (Join-Path $root 'crates\eudora-app\icons\icon.ico') $stage
+Copy-Item (Join-Path $root 'crates\eleonora-app\icons\icon.ico') $stage
 foreach ($name in 'LICENSE-MIT', 'LICENSE-APACHE', 'THIRD-PARTY-NOTICES.md') { Copy-Item (Join-Path $root $name) $stage }
 if (-not (Test-Path (Join-Path $root 'packaging\images\wizard-164x314.png'))) {
     & (Join-Path $PSScriptRoot 'make_installer_images.ps1')
@@ -58,9 +58,9 @@ $output = Join-Path $root 'dist'
 New-Item -ItemType Directory -Force $output | Out-Null
 Push-Location (Join-Path $root 'packaging')
 try {
-    & $iscc /Q "/DAppVersion=$version" "/DStage=$stage" "/DOutput=$output" "/DArch=$Arch" Eudora.iss
+    & $iscc /Q "/DAppVersion=$version" "/DStage=$stage" "/DOutput=$output" "/DArch=$Arch" Eleonora.iss
     if ($LASTEXITCODE -ne 0) { throw 'Inno Setup failed.' }
 } finally { Pop-Location }
 $suffix = if ($Arch -eq 'arm64') { '-arm64' } else { '' }
-$setup = Join-Path $output "Eudora-Setup-$version$suffix.exe"
+$setup = Join-Path $output "Eleonora-Setup-$version$suffix.exe"
 Write-Output ("Installer: $setup ({0:N1} MB)" -f ((Get-Item $setup).Length / 1MB))

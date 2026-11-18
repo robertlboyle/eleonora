@@ -14,7 +14,7 @@ import sys
 from html.parser import HTMLParser
 from pathlib import Path
 
-UI = Path(__file__).resolve().parent.parent / "crates" / "eudora-app" / "ui"
+UI = Path(__file__).resolve().parent.parent / "crates" / "eleonora-app" / "ui"
 PAGES = ["index.html", "compose.html", "msgview.html", "ics.html", "help/index.html", "phone/index.html"]
 SKIP_TYPES = {"hidden", "submit", "button", "reset", "image"}
 

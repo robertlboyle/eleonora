@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Contact File – Eleonora</title>
+  <link rel="stylesheet" href="base.css">
+  <link rel="stylesheet" href="eudora.css">
+  <link rel="stylesheet" href="eleonora.css">
+  <link rel="stylesheet" href="buttons.css">
+  <link rel="stylesheet" href="thunderbird.css">
+  <link rel="stylesheet" href="lookout-classic.css">
+  <link rel="stylesheet" href="lookout-new.css">
+  <link rel="stylesheet" href="gmail.css">
+  <link rel="stylesheet" href="yahoo.css">
+  <style>
+    body.ics-file { overflow: auto; padding: 18px 22px; background: var(--reader); color: var(--text); }
+    .ics-head h1 { margin: 0 0 4px; font-size: 1.35em; }
+    .ics-pick { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin: 12px 0 4px; }
+    .vcf-all { display: flex; gap: 8px; flex-wrap: wrap; margin: 10px 0 0; }
+    .ics-event { border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; margin: 12px 0; }
+    .ics-event h2 { margin: 0 0 4px; font-size: 1.15em; }
+    .vcf-what { color: var(--muted); margin: 0 0 6px; }
+    .ics-row { margin: 3px 0; display: flex; gap: 8px; }
+    .ics-row b { flex: none; min-width: 6.5em; color: var(--muted); font-weight: 600; }
+    .ics-row span { white-space: pre-line; min-width: 0; overflow-wrap: anywhere; }
+    .vcf-match { margin: 10px 0 0; padding: 8px 10px; border-radius: 8px; background: var(--hover); }
+    .vcf-match.new { background: transparent; padding-left: 0; color: var(--muted); }
+    .ics-actions { margin-top: 10px; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+    .ics-done { color: var(--muted); }
+  </style>
+  <script src="icons/set.js"></script>
+</head>
+<body class="skin-eudora ics-file">
+  <div class="ics-head">
+    <h1 id="v-name">Contact file</h1>
+    <p id="v-about" class="p-note"></p>
+    <div class="ics-pick"><label for="v-account">New contacts go to:</label> <select id="v-account"></select></div>
+    <p class="p-note">Adding or updating a contact changes your address book in Eleonora, and on its server with the next check. Updating keeps every email address, phone number, and address the contact already had, and takes this file's values where they differ.</p>
+    <div id="v-all" class="vcf-all" hidden></div>
+  </div>
+  <div id="v-contacts" role="list" aria-label="Contacts in the file"></div>
+  <script src="zoom.js"></script>
+  <script src="ask.js"></script>
+  <script src="vcf.js"></script>
+</body>
+</html>

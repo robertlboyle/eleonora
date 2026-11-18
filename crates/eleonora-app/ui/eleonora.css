@@ -1,0 +1,166 @@
+/* The Eleonora look.
+   Built over eudora.css (which stays Classic Eudora's look): the same panes and commands, with
+   more air, fewer lines, and the falcon icon's blue. The sidebar sits on the window's soft
+   background; the list and the message are white cards with rounded corners; the toolbar's
+   buttons are quiet icons until pointed at; the search is a rounded field; a selection is a soft
+   tint, never a solid block. Every rule is scoped to "skin-eudora, not classic". */
+
+body.skin-eudora:not(.classic) {
+  --font: "Segoe UI Variable Text", "Segoe UI", -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif;
+  --font-size: 13.5px;
+  --row: 34px;
+  --folder-row: 30px;
+  --folder-radius: 8px;
+  --folder-margin: 8px;
+  --toolbar-pad: 10px 16px;
+  --field-radius: 8px;
+  --button-radius: 8px;
+
+  --text: #1d2330;
+  --muted: #6a7385;
+  --window: #f3f5f9;
+  --toolbar: #f3f5f9;
+  --sidebar: #f3f5f9;
+  --pane-title: transparent;
+  --list: #ffffff;
+  --head: #ffffff;
+  --reader: #ffffff;
+  --reader-head: #ffffff;
+  --field: #ffffff;
+  --button: #ffffff;
+  --hover: #e9eef7;
+  --line: #e3e7ee;
+  --line-strong: #c3cad6;
+  --row-line: #f1f3f7;
+  --accent: #1a5fd6;
+  --accent-soft: #1a5fd626;
+  --selected: #dde8fc;
+  --selected-text: #10203f;
+  --selected-blur: #eceff4;
+  --note: #fff6e0;
+  --note-text: #6b4e00;
+  --quote1: #1a5fd6;
+  --quote2: #8a4fc0;
+  --quote3: #2f7d4f;
+  --search: #e7ebf2;
+  --accent-strong: #1a5fd6;
+  --danger: #c0392b;
+  --card-edge: 0 0 0 1px #1d23300f, 0 1px 3px #1d23301a;
+}
+
+/* the toolbar: no line under it, quiet icon buttons, a rounded search field */
+body.skin-eudora:not(.classic) #toolbar { background: var(--window); border-bottom: 0; gap: 14px; }
+body.skin-eudora:not(.classic) .brand { letter-spacing: 0.01em; }
+body.skin-eudora:not(.classic) .search { background: var(--search); border-color: transparent; border-radius: 999px; padding: 0 8px 0 14px; }
+body.skin-eudora:not(.classic) .search:focus-within { background: var(--field); border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+body.skin-eudora:not(.classic) .search input { padding: 7px 0; }
+body.skin-eudora:not(.classic) #toolbar .tool { background: transparent; border-color: transparent; color: var(--muted); }
+body.skin-eudora:not(.classic) #toolbar .tool:hover { background: var(--hover); color: var(--text); }
+body.skin-eudora:not(.classic) #toolbar .tool:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+body.skin-eudora:not(.classic) .skin-pick select { border-color: transparent; background: var(--search); border-radius: 999px; padding: 4px 10px; }
+
+/* the sidebar: on the window's background, small headings, rounded rows, a tinted selection */
+body.skin-eudora:not(.classic) .pane-title {
+  border-bottom: 0; padding: 10px 18px 6px;
+  font-size: 0.78em; letter-spacing: 0.07em; text-transform: uppercase; color: var(--muted);
+}
+body.skin-eudora:not(.classic) #folders { padding: 2px 0 8px; }
+body.skin-eudora:not(.classic) .folder.on { background: var(--selected); color: var(--accent); font-weight: 600; }
+body.skin-eudora:not(.classic) .folder.on .f-unread { color: inherit; }
+body.skin-eudora:not(.classic) .folder.account, body.skin-eudora:not(.classic) .folder.accounts { margin-top: 10px; }
+
+/* no visible splitters: the panes are parted by space */
+body.skin-eudora:not(.classic) .splitter { background: transparent; }
+body.skin-eudora:not(.classic) .splitter.vertical,
+body.skin-eudora:not(.classic) .splitter.horizontal { border-color: transparent; }
+
+/* the list and the message on white cards */
+body.skin-eudora:not(.classic) #right { padding: 0 14px 4px 0; }
+body.skin-eudora:not(.classic) #list-pane,
+body.skin-eudora:not(.classic) #message-pane { border-radius: 12px; overflow: hidden; box-shadow: var(--card-edge); }
+
+/* the list: a title with room, light headings without dividers, rows without lines, each a
+   rounded band when chosen */
+body.skin-eudora:not(.classic) #list-title { background: transparent; border-bottom: 0; padding: 14px 18px 8px; }
+body.skin-eudora:not(.classic) #list-name { font-size: 1.15em; letter-spacing: -0.01em; }
+body.skin-eudora:not(.classic) #list-head { background: var(--list); border-bottom: 1px solid var(--line); height: 28px; font-size: 0.82em; padding: 0 6px; }
+body.skin-eudora:not(.classic) #list-head .cell { border-right: 0; padding: 0 10px; }
+body.skin-eudora:not(.classic) .cell { padding: 0 10px; }
+body.skin-eudora:not(.classic) .row { left: 6px; right: 6px; border-bottom: 0; border-radius: 8px; }
+body.skin-eudora:not(.classic) .row.on { background: var(--selected); color: var(--selected-text); }
+body.skin-eudora:not(.classic) #list:not(:focus) .row.on { background: var(--selected-blur); color: var(--text); }
+body.skin-eudora:not(.classic) .c-who { font-weight: 500; }
+body.skin-eudora:not(.classic) .c-date, body.skin-eudora:not(.classic) .c-size { color: var(--muted); }
+body.skin-eudora:not(.classic) .row.on .c-date, body.skin-eudora:not(.classic) .row.on .c-size { color: inherit; opacity: 0.8; }
+body.skin-eudora:not(.classic) .c-status { padding: 0; text-overflow: clip; color: var(--muted); }
+body.skin-eudora:not(.classic) .row.unread .c-status { color: var(--accent); font-size: 1.35em; line-height: 1; }
+body.skin-eudora:not(.classic) .row.on .c-status { color: inherit; }
+/* (the keyboard's focus ring stays, as clear as before, following the card's rounded corners) */
+body.skin-eudora:not(.classic) #list:focus-visible { border-radius: 0 0 12px 12px; }
+body.skin-eudora:not(.classic) #folders:focus-visible { border-radius: 10px; }
+body.skin-eudora:not(.classic) .label { border-radius: 999px; padding: 0 8px; }
+body.skin-eudora:not(.classic) .row.on .label { background: #ffffff99; }
+
+/* the message: a generous heading, the tabs underlined in blue */
+body.skin-eudora:not(.classic) #message-head { background: var(--reader); padding: 18px 22px 0; }
+body.skin-eudora:not(.classic) #m-subject { font-size: 1.45em; font-weight: 600; letter-spacing: -0.01em; line-height: 1.25; margin-bottom: 10px; }
+body.skin-eudora:not(.classic) #m-views { margin-top: 12px; }
+body.skin-eudora:not(.classic) #m-views button.on { color: var(--accent); }
+body.skin-eudora:not(.classic) .chip { border-radius: 8px; }
+
+/* the status bar: quiet, on the window's background */
+body.skin-eudora:not(.classic) #status { background: var(--window); border-top: 0; padding: 2px 18px 3px; }
+
+/* windows over the main one: rounder */
+body.skin-eudora:not(.classic) dialog.adv-search { border-radius: 14px; border-color: var(--line); box-shadow: 0 12px 40px #1d233033; }
+body.skin-eudora:not(.classic) .cw-inner { border-radius: 12px; }
+body.skin-eudora:not(.classic) .popup-menu { border-radius: 10px; }
+
+/* the message window (compose.css) and the calendar file window */
+body.skin-eudora.compose:not(.classic) #c-bar { background: var(--window); border-bottom: 0; padding: 10px 14px; }
+body.skin-eudora.compose:not(.classic) #c-bar button:not(.primary), body.skin-eudora.compose:not(.classic) #c-bar select { border-color: transparent; background: transparent; color: var(--muted); }
+body.skin-eudora.compose:not(.classic) #c-bar button:not(.primary):hover { background: var(--hover); color: var(--text); }
+body.skin-eudora.compose:not(.classic) #c-bar .c-toggle button { border-color: var(--line-strong); }
+body.skin-eudora.compose:not(.classic) #c-bar .primary { border-radius: 999px; padding: 6px 18px; }
+body.skin-eudora.compose:not(.classic) #c-head { background: var(--reader); padding: 12px 18px 6px; }
+body.skin-eudora.compose:not(.classic) .c-row > span { font-weight: 500; color: var(--muted); }
+body.skin-eudora.compose:not(.classic) .c-row input, body.skin-eudora.compose:not(.classic) .c-row select { border-color: var(--line); }
+
+
+/* Roomier rows (Settings ▸ General ▸ Text size and buttons) */
+html.roomy body.skin-eudora:not(.classic) { --row: 40px; --folder-row: 34px; }
+
+@media (prefers-color-scheme: dark) {
+  body.skin-eudora:not(.classic) {
+    --text: #e6e9ef;
+    --muted: #9aa3b2;
+    --window: #121418;
+    --toolbar: #121418;
+    --sidebar: #121418;
+    --list: #1a1d23;
+    --head: #1a1d23;
+    --reader: #1a1d23;
+    --reader-head: #1a1d23;
+    --field: #1f232a;
+    --button: #232831;
+    --hover: #222833;
+    --line: #2a2f38;
+    --line-strong: #444b57;
+    --row-line: #20242b;
+    --accent: #6ea2ff;
+    --accent-soft: #6ea2ff33;
+    --selected: #243553;
+    --selected-text: #eef3ff;
+    --selected-blur: #262b34;
+    --note: #3a3018;
+    --note-text: #f1d58a;
+    --quote1: #8fb6ff;
+    --quote2: #c99ae3;
+    --quote3: #8fcf9f;
+    --search: #1f232a;
+    --accent-strong: #2f6fdf;
+    --danger: #ff8a80;
+    --card-edge: 0 0 0 1px #ffffff0f, 0 1px 3px #00000066;
+  }
+  body.skin-eudora:not(.classic) .row.on .label { background: #ffffff22; }
+}

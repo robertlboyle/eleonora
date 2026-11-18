@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Classic mode's icons (crates/eudora-app/ui/classic/*.svg), redrawn from Eudora 7.1's own
+# Classic mode's icons (crates/eleonora-app/ui/classic/*.svg), redrawn from Eudora 7.1's own
 # (Eudora_W_source/Eudora71/Eudora/res/icons/tbar32.bmp and the status / priority bitmaps).
 #
 # Every icon is built from the same few parts, so they match icon to icon:
@@ -10,7 +10,7 @@
 #   - one green badge and one teal badge (glossy balls with a black arrow).
 # Run from the repository: bash scripts/classic_icons.sh
 set -euo pipefail
-OUT="$(cd "$(dirname "$0")/.." && pwd)/crates/eudora-app/ui/classic"
+OUT="$(cd "$(dirname "$0")/.." && pwd)/crates/eleonora-app/ui/classic"
 mkdir -p "$OUT"
 
 # ── the parts ──────────────────────────────────────────────────────────────────────────────
@@ -305,9 +305,9 @@ icon junk "Junk mailbox: a tin can of fish with its lid rolled back, and a fish 
     <circle cx=\"2.1\" cy=\"4.6\" r=\"0.55\" fill=\"#3c3c3c\" stroke=\"none\"/>
   </g>"
 
-# The tray icons (the system tray: crates/eudora-app/icons): the same tray, twice the size; new
+# The tray icons (the system tray: crates/eleonora-app/icons): the same tray, twice the size; new
 # mail = the glossy green arrow coming down into it (Eudora 7.1's havemail.ico / nomail.ico)
-TRAY_OUT="$(cd "$(dirname "$0")/.." && pwd)/crates/eudora-app/icons"
+TRAY_OUT="$(cd "$(dirname "$0")/.." && pwd)/crates/eleonora-app/icons"
 DOWN='M16 29.5 C15.5 29.5 15 29.2 14.6 28.8 L4.4 17.4 C3.9 16.8 4.3 16 5.1 16 H10.5 V3.5 C10.5 2.9 10.9 2.5 11.5 2.5 H20.5 C21.1 2.5 21.5 2.9 21.5 3.5 V16 H26.9 C27.7 16 28.1 16.8 27.6 17.4 L17.4 28.8 C17 29.2 16.5 29.5 16 29.5 Z'
 for kind in nomail newmail; do
   arrowpart=""

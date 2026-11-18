@@ -1,6 +1,6 @@
 """Measures the color contrast of every look, light and dark, against WCAG 2.2 AA: text 4.5:1 (1.4.3), the parts of controls and
 the focus ring 3:1 (1.4.11). Reads the looks' colors from their stylesheets
-(crates/eudora-app/ui/*.css: each look's light block and its prefers-color-scheme: dark block).
+(crates/eleonora-app/ui/*.css: each look's light block and its prefers-color-scheme: dark block).
 
     py -3 scripts/check_contrast.py          # every pair, the failures marked
     py -3 scripts/check_contrast.py --fail   # exit 1 when any pair fails (for tests)
@@ -14,7 +14,7 @@ import re
 import sys
 from pathlib import Path
 
-UI = Path(__file__).resolve().parent.parent / "crates" / "eudora-app" / "ui"
+UI = Path(__file__).resolve().parent.parent / "crates" / "eleonora-app" / "ui"
 LOOKS = ["eudora.css", "thunderbird.css", "lookout-classic.css", "lookout-new.css", "gmail.css", "yahoo.css"]
 FOCUS = {"light": "#1a5fd0", "dark": "#7fb0ff"}
 # looks whose toolbar is a colored bar with its own (white) text: that text is measured there

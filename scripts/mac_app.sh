@@ -1,5 +1,5 @@
 #!/bin/bash
-# Makes Eudora.app from the release build and signs it: one place for scripts/install-dev.sh
+# Makes Eleonora.app from the release build and signs it: one place for scripts/install-dev.sh
 # (this Mac's copy) and scripts/build-mac.sh (the .dmg for others), so every Mac build is signed
 # the same way.
 #
@@ -17,29 +17,29 @@ release=0
 [ "${2:-}" = "--release" ] && release=1
 
 root="$(cd "$(dirname "$0")/.." && pwd)"
-# (the programs from the native build, or EUDORA_MAC_BUILD: build-mac.sh's universal ones)
-build="${EUDORA_MAC_BUILD:-$root/target/release}"
-icons="$root/crates/eudora-app/icons"
+# (the programs from the native build, or ELEONORA_MAC_BUILD: build-mac.sh's universal ones)
+build="${ELEONORA_MAC_BUILD:-$root/target/release}"
+icons="$root/crates/eleonora-app/icons"
 entitlements="$root/packaging/macos/entitlements.plist"
-version="$(sed -n 's/^ *"version": *"\(.*\)",*$/\1/p' "$root/crates/eudora-app/tauri.conf.json" | head -1)"
+version="$(sed -n 's/^ *"version": *"\(.*\)",*$/\1/p' "$root/crates/eleonora-app/tauri.conf.json" | head -1)"
 
-for name in eudora eudora-cli; do
-    [ -x "$build/$name" ] || { echo "$build/$name isn't built yet (cargo build --release -p eudora-app -p eudora-cli)" >&2; exit 1; }
+for name in eleonora eleonora-cli; do
+    [ -x "$build/$name" ] || { echo "$build/$name isn't built yet (cargo build --release -p eleonora-app -p eleonora-cli)" >&2; exit 1; }
 done
 
 rm -rf "$dest"
 mkdir -p "$dest/Contents/MacOS" "$dest/Contents/Resources"
-cp "$build/eudora" "$build/eudora-cli" "$dest/Contents/MacOS/"
+cp "$build/eleonora" "$build/eleonora-cli" "$dest/Contents/MacOS/"
 
 # the icon: the 1024-pixel PNG made by scripts/make_icons.py, in every size macOS wants
 work="$(mktemp -d)"
-set_dir="$work/Eudora.iconset"
+set_dir="$work/Eleonora.iconset"
 mkdir -p "$set_dir"
 for size in 16 32 128 256 512; do
     sips -z $size $size "$icons/icon.png" --out "$set_dir/icon_${size}x${size}.png" >/dev/null
     sips -z $((size * 2)) $((size * 2)) "$icons/icon.png" --out "$set_dir/icon_${size}x${size}@2x.png" >/dev/null
 done
-iconutil -c icns "$set_dir" -o "$dest/Contents/Resources/Eudora.icns"
+iconutil -c icns "$set_dir" -o "$dest/Contents/Resources/Eleonora.icns"
 rm -rf "$work"
 
 cat > "$dest/Contents/Info.plist" <<EOF
@@ -47,11 +47,11 @@ cat > "$dest/Contents/Info.plist" <<EOF
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-    <key>CFBundleName</key><string>Eudora</string>
-    <key>CFBundleDisplayName</key><string>Eudora</string>
-    <key>CFBundleIdentifier</key><string>net.planet.eudora</string>
-    <key>CFBundleExecutable</key><string>eudora</string>
-    <key>CFBundleIconFile</key><string>Eudora</string>
+    <key>CFBundleName</key><string>Eleonora</string>
+    <key>CFBundleDisplayName</key><string>Eleonora</string>
+    <key>CFBundleIdentifier</key><string>net.planet.eleonora</string>
+    <key>CFBundleExecutable</key><string>eleonora</string>
+    <key>CFBundleIconFile</key><string>Eleonora</string>
     <key>CFBundlePackageType</key><string>APPL</string>
     <key>CFBundleShortVersionString</key><string>$version</string>
     <key>CFBundleVersion</key><string>$version</string>
@@ -88,6 +88,13 @@ cat > "$dest/Contents/Info.plist" <<EOF
             <key>LSItemContentTypes</key><array><string>com.apple.ical.ics</string><string>public.calendar-event</string></array>
             <key>CFBundleTypeExtensions</key><array><string>ics</string></array>
         </dict>
+        <dict>
+            <key>CFBundleTypeName</key><string>Contact card</string>
+            <key>CFBundleTypeRole</key><string>Viewer</string>
+            <key>LSHandlerRank</key><string>Alternate</string>
+            <key>LSItemContentTypes</key><array><string>public.vcard</string></array>
+            <key>CFBundleTypeExtensions</key><array><string>vcf</string><string>vcard</string></array>
+        </dict>
     </array>
 </dict>
 </plist>
@@ -102,12 +109,12 @@ if [ -n "$identity" ]; then
     # under the app's one identity: the Keychain lets a saved password be read without asking
     # only by the identity that saved it, and the window and its download share every one
     # (signed apart, the download asked about every minute: 2026-10-27)
-    "${sign[@]}" --identifier net.planet.eudora "$dest/Contents/MacOS/eudora-cli"
+    "${sign[@]}" --identifier net.planet.eleonora "$dest/Contents/MacOS/eleonora-cli"
     "${sign[@]}" "$dest"
     codesign --verify --deep --strict "$dest"
     echo "Signed: $(security find-identity -v -p codesigning | sed -n "s/.*$identity \"\(.*\)\"/\1/p")"
 else
-    codesign --force --sign - "$dest/Contents/MacOS/eudora-cli"
+    codesign --force --sign - "$dest/Contents/MacOS/eleonora-cli"
     codesign --force --sign - "$dest"
     echo "No Developer ID certificate in the keychain: signed ad hoc (runs on this Mac only)." >&2
 fi

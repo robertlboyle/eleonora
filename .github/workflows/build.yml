@@ -22,7 +22,7 @@ concurrency:
 env:
   CARGO_TERM_COLOR: always
   # no network calls to an update server from tests
-  EUDORA_UPDATE_URL: ""
+  ELEONORA_UPDATE_URL: ""
 
 jobs:
   test:

@@ -1,4 +1,4 @@
-# Eudora
+# Eleonora
 
 A fast, free email program for Windows, the Mac, and Linux (with Android and iOS versions on the
 way), built for huge mailboxes: tens of millions of messages and decades of mail stay quick to
@@ -12,18 +12,18 @@ open, scroll, and search.
   notifications, and mailing lists sorted aside; rules; Views such as Receipts, Invoices, and Red
   Alert.
 - **Calendar, contacts, and To Do**, from Microsoft and Google.
-- **Looks** for every taste: Eudora Classic and Modern, and looks in the style of other popular
+- **Looks** for every taste: Classic Eudora and Modern, and looks in the style of other popular
   mail programs, with dark mode.
 - **Scriptable:** a command line for every function, a local API with permissions you grant, and
   plugins that run sandboxed in WebAssembly.
-- **Private:** your mail stays on your computer and your mail servers. Eudora collects nothing
+- **Private:** your mail stays on your computer and your mail servers. Eleonora collects nothing
   about you, has no ads, and sends nothing anywhere you didn't ask it to.
 
 Ready-made versions: [software.planet.net](https://software.planet.net/eudora.html).
 
 ## Official versions and builds from this source
 
-To use Eudora day to day, install the official version from
+To use Eleonora day to day, install the official version from
 [software.planet.net](https://software.planet.net/eudora.html): it's always the newest version,
 and it keeps itself up to date, installing each new version as it comes out. Anything built from this
 repository, including the packages GitHub Actions makes on each commit (a run's page ▸
@@ -45,9 +45,9 @@ Artifacts), is the same program but differs from an official version:
 - **Not signed.** Windows SmartScreen warns about the installer (choose **More info ▸ Run
   anyway**). macOS refuses to open a downloaded app that isn't signed and notarized: after the
   first try, choose **Open Anyway** in System Settings ▸ Privacy & Security, or clear its
-  quarantine flag with `xattr -dr com.apple.quarantine /Applications/Eudora.app`. The official Mac version is signed and notarized by Planet Networks; official
+  quarantine flag with `xattr -dr com.apple.quarantine /Applications/Eleonora.app`. The official Mac version is signed and notarized by Planet Networks; official
   Windows installers aren't code-signed yet either.
-- **Linux packages don't add Eudora's apt or dnf repository**, so they aren't kept up to date by
+- **Linux packages don't add Eleonora's apt or dnf repository**, so they aren't kept up to date by
   the system's updates.
 - **Font Awesome Free icons** replace the Pro icons of official versions, so a few icons look
   different.
@@ -65,13 +65,13 @@ sign-in registrations and update server).
 
 ## License
 
-Eudora is free software by Planet Networks, under your choice of the
+Eleonora is free software by Planet Networks, under your choice of the
 [MIT License](LICENSE-MIT) or the [Apache License 2.0](LICENSE-APACHE).
 [THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md) lists the work of others it uses.
 
-Parts of Eudora, among them its classic icons and some of its classic behavior, are based on
+Parts of Eleonora, among them its classic icons and some of its classic behavior, are based on
 classic Eudora, whose source the Computer History Museum released under a BSD license; its
-copyright notice and license are in [THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md). "Eudora"
+copyright notice and license are in [THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md). "Eleonora"
 here is a new program, not QUALCOMM's.
 
 Icons: official builds use Font Awesome Pro (Planet Networks' license). The published source uses
@@ -81,5 +81,5 @@ of your own.
 
 ## Feedback
 
-Bug reports and suggestions: **software@planet.net**. Eudora comes with no warranty and no
+Bug reports and suggestions: **software@planet.net**. Eleonora comes with no warranty and no
 support, but the intention is to fix reported bugs quickly and to add good suggestions.

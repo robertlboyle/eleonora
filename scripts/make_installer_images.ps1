@@ -1,14 +1,14 @@
-# Draws the installer's pictures from Eudora's icon (packaging\images\): the tall picture on the
-# Welcome and Finished pages (blue panel, the icon on a white tile, "Eudora") and the small one at
-# the top right of the other pages, at every size Inno Setup lists for 100-250 % scaling (Setup
-# picks the one for the screen). As PlanetPDF's.
+# Draws the installer's pictures from Eleonora's icon (the falcon) (packaging\images\): the tall picture on the
+# Welcome and Finished pages (blue panel, the icon on a white tile, "Eleonora") and the small one at the top
+# right of the other pages, at every size Inno Setup lists for 100-250 % scaling (Setup picks the one for the
+# screen). As PlanetPDF's.
 #
 #   .\scripts\make_installer_images.ps1
 $ErrorActionPreference = 'Stop'
 Add-Type -AssemblyName System.Drawing
 
 $root = Split-Path $PSScriptRoot
-$icon = [System.Drawing.Image]::FromFile((Join-Path $root 'crates\eudora-app\icons\icon.png'))
+$icon = [System.Drawing.Image]::FromFile((Join-Path $root 'crates\eleonora-app\icons\icon.png'))
 $out = Join-Path $root 'packaging\images'
 New-Item -ItemType Directory -Force $out | Out-Null
 
@@ -46,7 +46,7 @@ foreach ($size in '164x314', '192x386', '246x459', '273x556', '328x604', '355x70
     $font = New-Object System.Drawing.Font 'Segoe UI Semibold', ([float]($w * 0.135)), ([System.Drawing.FontStyle]::Regular), ([System.Drawing.GraphicsUnit]::Pixel)
     $format = New-Object System.Drawing.StringFormat
     $format.Alignment = 'Center'
-    $g.DrawString('Eudora', $font, [System.Drawing.Brushes]::White, (New-Object System.Drawing.RectangleF 0, ($y + $tile + $h * 0.05), $w, ($h * 0.2)), $format)
+    $g.DrawString('Eleonora', $font, [System.Drawing.Brushes]::White, (New-Object System.Drawing.RectangleF 0, ($y + $tile + $h * 0.05), $w, ($h * 0.2)), $format)
     $small = New-Object System.Drawing.Font 'Segoe UI', ([float]($w * 0.07)), ([System.Drawing.FontStyle]::Regular), ([System.Drawing.GraphicsUnit]::Pixel)
     $soft = New-Object System.Drawing.SolidBrush ([System.Drawing.Color]::FromArgb(210, 255, 255, 255))
     $g.DrawString('Mail for decades of messages', $small, $soft, (New-Object System.Drawing.RectangleF 0, ($y + $tile + $h * 0.15), $w, ($h * 0.1)), $format)

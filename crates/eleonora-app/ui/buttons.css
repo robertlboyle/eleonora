@@ -1,0 +1,148 @@
+/* Buttons in the Eleonora and Classic Eudora looks.
+
+   1. Every button, in every window of these looks (the main window and its dialogs, the message
+      window, a calendar file's window), starts from one style: rounded (8 px), a soft border, the
+      look's button color, a gentle hover and a pressed state. It's given with no weight
+      (`:where`), so a button that has its own style elsewhere (a menu's items, a message's tabs,
+      the toolbar's icons) keeps it, and only what was left to the system's square gray button
+      takes this one.
+   2. Buttons whose own style gave them square or small corners are rounded too (the list below).
+   3. The main choice (.primary) is filled in blue; a dangerous one (.danger) is outlined in red.
+   4. Buttons side by side keep a little space between them.
+   The colors come from the look's own variables, so each look and dark mode keep theirs. */
+
+:where(body.skin-eudora) :where(button, input[type=button], input[type=submit], input[type=reset]) {
+  padding: 5px 14px;
+  border: 1px solid var(--line-strong);
+  border-radius: 8px;
+  background: var(--button);
+  color: var(--text);
+  font: inherit;
+  font-weight: 500;
+  line-height: 1.3;
+  cursor: pointer;
+  box-shadow: 0 1px 1px #1d23300d;
+  transition: background 0.12s, border-color 0.12s, box-shadow 0.12s;
+}
+:where(body.skin-eudora) :where(button, input[type=button], input[type=submit], input[type=reset]):where(:hover:not(:disabled)) {
+  background: var(--hover);
+  border-color: var(--accent);
+}
+:where(body.skin-eudora) :where(button):where(:active:not(:disabled)) { box-shadow: none; transform: translateY(1px); }
+:where(body.skin-eudora) :where(button):where(:disabled) { opacity: 0.5; cursor: default; box-shadow: none; }
+:where(body.skin-eudora) :where(input[type=file])::file-selector-button {
+  margin-right: 10px;
+  padding: 5px 14px;
+  border: 1px solid var(--line-strong);
+  border-radius: 8px;
+  background: var(--button);
+  color: var(--text);
+  font: inherit;
+  cursor: pointer;
+}
+body.skin-eudora button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* 2. buttons styled elsewhere with square or 4 px corners, and the system's drop-downs: rounded */
+body.skin-eudora :is(.p-buttons, .p-find, .ab-tools, .ab-buttons, #cal-bar, #todo-bar, .adv-search, #search-help .try, #m-pictures, .ce-foot, #c-bar, #m-back, .sort-rule, .ac-head, .ac-details-head, .bk-row, .f-buttons, .f-row, .draft-row, .subs-act, .welcome-choices, .cal-trip, .cal-invite, .m-invite, #m-problems, #m-attachments, .ab-bar, #sr-new, .sr-mailboxes, .as-edited, .as-rows) button,
+body.skin-eudora #m-back,
+body.skin-eudora .sort-rule,
+body.skin-eudora .cal-trip-btn,
+body.skin-eudora dialog :is(button:not(.dlg-x, .cw-btn, .mini-btn, .pick-row, [role=tab], [role=menuitem])),
+body.skin-eudora :is(select):not(.search select) {
+  border-radius: 8px;
+}
+body.skin-eudora dialog .dlg-x { border-radius: 8px; }
+body.skin-eudora :is(.p-buttons, .p-find, .ab-tools, .ab-buttons, #cal-bar, #todo-bar, .adv-search, #search-help .try, #m-pictures, .ce-foot) button:not(.primary, .danger, .on) {
+  padding: 5px 14px;
+  border: 1px solid var(--line-strong);
+  background: var(--button);
+  color: var(--text);
+}
+body.skin-eudora :is(.p-buttons, .p-find, .ab-tools, .ab-buttons, #cal-bar, #todo-bar, .adv-search, #search-help .try, #m-pictures, .ce-foot) button:not(.primary, .danger):hover:not(:disabled) {
+  background: var(--hover);
+  border-color: var(--accent);
+}
+
+/* 3. the main choice and a dangerous one (with the containers above, so these outrank them: some
+   are matched by their id) */
+body.skin-eudora button.primary,
+body.skin-eudora :is(.p-buttons, .p-find, .ab-tools, .ab-buttons, #cal-bar, #todo-bar, .adv-search, #search-help .try, #m-pictures, .ce-foot, #c-bar) button.primary {
+  background: var(--accent-strong, var(--accent));
+  border-color: var(--accent-strong, var(--accent));
+  color: #fff;
+  font-weight: 600;
+  border-radius: 8px;
+}
+body.skin-eudora button.primary:hover:not(:disabled),
+body.skin-eudora :is(.p-buttons, .p-find, .ab-tools, .ab-buttons, #cal-bar, #todo-bar, .adv-search, #search-help .try, #m-pictures, .ce-foot, #c-bar) button.primary:hover:not(:disabled) {
+  background: var(--accent-strong, var(--accent));
+  border-color: var(--accent-strong, var(--accent));
+  filter: brightness(1.1);
+}
+body.skin-eudora button.danger,
+body.skin-eudora :is(.p-buttons, .p-find, .ab-tools, .ab-buttons, #cal-bar, #todo-bar, .adv-search, #search-help .try, #m-pictures, .ce-foot) button.danger {
+  background: transparent;
+  border-color: var(--danger, #c0392b);
+  color: var(--danger, #c0392b);
+  border-radius: 8px;
+}
+body.skin-eudora button.danger:hover:not(:disabled),
+body.skin-eudora :is(.p-buttons, .p-find, .ab-tools, .ab-buttons, #cal-bar, #todo-bar, .adv-search, #search-help .try, #m-pictures, .ce-foot) button.danger:hover:not(:disabled) {
+  background: #c0392b;
+  border-color: #c0392b;
+  color: #fff;
+}
+@media (prefers-color-scheme: dark) {
+  body.skin-eudora.classic button.danger { --danger: #ff8a80; }
+}
+
+/* 4. space between buttons side by side: 8 px after another button, 2 px above and
+   below for rows that wrap. (Not in menus, Settings' page list, a message's tabs, or the toolbar,
+   where buttons are stacked, touch on purpose, or have their own spacing.) */
+body.skin-eudora :where(dialog, .p-buttons, .p-find, .ab-tools, .ab-buttons, #cal-bar, #todo-bar, .adv-search, #search-help, #m-pictures, .ce-foot, .m-invite, .cal-trip, .f-buttons, .bk-row, .welcome-choices, section) button:not(.popup-menu button, .cal-menu button, #p-nav button, #m-views button, .mini-btn, .cw-btn, .dlg-x, .pick-row, .tool) {
+  margin-top: 2px;
+  margin-bottom: 2px;
+}
+body.skin-eudora :where(dialog, .p-buttons, .p-find, .ab-tools, .ab-buttons, #cal-bar, #todo-bar, .adv-search, #search-help, #m-pictures, .ce-foot, .m-invite, .cal-trip, .f-buttons, .bk-row, .welcome-choices, section) button:not(.popup-menu button, .cal-menu button, #p-nav button, #m-views button, .mini-btn, .cw-btn, .dlg-x, .pick-row, .tool) + button:not(.mini-btn, .dlg-x) {
+  margin-left: 8px;
+}
+
+/* the calendar's views: rounded buttons side by side, the one shown tinted */
+body.skin-eudora #cal-modes { display: inline-flex; gap: 6px; }
+body.skin-eudora #cal-modes button { border-radius: 8px; margin: 0; }
+body.skin-eudora #cal-modes button.on { background: var(--selected); border-color: var(--accent); color: var(--selected-text); }
+body.skin-eudora:not(.classic) #cal-modes button.on { color: var(--accent); }
+/* the small buttons on a message's head (fewer headers, maximize, pop out) */
+body.skin-eudora #m-tools button { border-radius: 8px; padding: 0; }
+body.skin-eudora:not(.classic) #m-tools button { border-color: transparent; background: transparent; color: var(--muted); }
+body.skin-eudora:not(.classic) #m-tools button:hover { background: var(--hover); color: var(--text); }
+/* the Settings window's pages */
+body.skin-eudora #p-nav button { border-radius: 8px; }
+body.skin-eudora:not(.classic) #p-nav button.on { background: var(--selected); color: var(--accent); font-weight: 600; }
+/* fields beside the buttons: the same corners */
+body.skin-eudora :is(.p-find, #todo-bar, #cal-bar, .ab-bar, dialog, #c-head) :is(input[type=text], input[type=search], input[type=email], input[type=number], input[type=password], input[type=url], input[type=date], input[type=time], input[type=datetime-local], input:not([type]), textarea) { border-radius: 8px; }
+
+/* found by going through every dialog and page (2026-11-17): what still had square or 3-4 px
+   corners. Classic Eudora's own toolbar buttons and the buttons that take its button radius are
+   rounded too. */
+body.skin-eudora { --button-radius: 8px; }
+body.skin-eudora :is(#prefs, #p-pages, dialog, #ac-details, #todo-bar, #cal-bar, #contacts, #todo, #calendar) select,
+body.skin-eudora #prefs input[type=text] { border-radius: 8px; }
+body.skin-eudora :is(.dl-btn, .job-stop) { border-radius: 8px; padding: 2px 12px; }
+body.skin-eudora .search :is(.search-adv, .search-all) { border-radius: 6px; }
+/* the message window's HTML / Plain Text switch: one rounded control of two halves */
+body.skin-eudora #c-bar .c-toggle button { border-radius: 0; margin: 0; }
+body.skin-eudora #c-bar .c-toggle button:first-child { border-radius: 8px 0 0 8px; }
+body.skin-eudora #c-bar .c-toggle button:last-child { border-radius: 0 8px 8px 0; }
+/* buttons the window builds as it goes (the rules editor, the contact editor, To Do, the
+   calendar's trips, Settings' Change buttons) and their fields, styled elsewhere with 4 px corners */
+body.skin-eudora :is(.f-small, .f-folder, .f-x, .p-change, .ce-remove, .ce-add, .chip-all, .chip-save, .todo-message, .cal-trip-file, .cal-more, .classic-tool) { border-radius: 8px; }
+body.skin-eudora :is(.f-test, .f-action, .f-row, .f-import, .a-grid, .p-pics, .adv-search, .ce) :is(select, input:not([type=checkbox], [type=radio]), textarea) { border-radius: 8px; }
+/* small borderless ones: a menu's items, an inner window's corner buttons */
+body.skin-eudora :is(.popup-menu button, .cal-menu button, .cw-btn) { border-radius: 6px; }
+
+/* the status bar stays slim: its
+   Pause / Resume / Stop buttons small and flat, its text on one short line */
+body.skin-eudora #status { padding-top: 2px; padding-bottom: 2px; line-height: 1.25; }
+body.skin-eudora #status :is(.dl-btn, .job-stop) { padding: 0 9px; line-height: 1.35; font-size: 0.88em; border-radius: 6px; box-shadow: none; margin: 0 0 0 6px; }
+body.skin-eudora #status .bg-work { padding: 0 6px; box-shadow: none; line-height: 1.25; }

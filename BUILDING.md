@@ -1,6 +1,6 @@
-# Building Eudora
+# Building Eleonora
 
-This guide is for people and for AI coding agents. It covers setting up a computer to build Eudora,
+This guide is for people and for AI coding agents. It covers setting up a computer to build Eleonora,
 building and testing it on Windows, the Mac, and Linux (and the Android and iOS versions), and the
 few settings a build of your own needs before it can sign in to Microsoft or Google or update
 itself.
@@ -9,21 +9,21 @@ If you're an AI agent: run the setup script for the platform, then the checks in
 [Check your setup](#check-your-setup), before building. Every command here is meant to run as
 written, from the repository's top folder.
 
-## What Eudora is made of
+## What Eleonora is made of
 
 | Folder | What |
 |---|---|
-| `crates/eudora-core` | The core library, in Rust: downloading (Microsoft Graph, Gmail API, IMAP, POP3), storage (SQLite + compressed message packs), search (Tantivy), the spam filter, rules, sync, backups, the local API and plugins (wasmtime). No user interface. |
-| `crates/eudora-app` | The window: Tauri 2 with a plain HTML / CSS / JavaScript front end in `ui/` (no npm, no bundler). `ui/phone/` is the phone version's interface; `gen/android` and `gen/apple` are the phone projects. |
-| `crates/eudora-cli` | The `eudora-cli` command line: every function of the window, for scripts. The window also runs it in the background to download mail. |
-| `crates/eudora-release` | Signs release files for Eudora's self-updating (`keygen`, `publish`). |
-| `crates/eudora-web` | A web interface (not developed further at the moment). |
-| `crates/eudora-testkit` | Makes synthetic mail for tests. |
+| `crates/eleonora-core` | The core library, in Rust: downloading (Microsoft Graph, Gmail API, IMAP, POP3), storage (SQLite + compressed message packs), search (Tantivy), the spam filter, rules, sync, backups, the local API and plugins (wasmtime). No user interface. |
+| `crates/eleonora-app` | The window: Tauri 2 with a plain HTML / CSS / JavaScript front end in `ui/` (no npm, no bundler). `ui/phone/` is the phone version's interface; `gen/android` and `gen/apple` are the phone projects. |
+| `crates/eleonora-cli` | The `eleonora-cli` command line: every function of the window, for scripts. The window also runs it in the background to download mail. |
+| `crates/eleonora-release` | Signs release files for Eleonora's self-updating (`keygen`, `publish`). |
+| `crates/eleonora-web` | A web interface (not developed further at the moment). |
+| `crates/eleonora-testkit` | Makes synthetic mail for tests. |
 | `packaging/` | The Windows installer (Inno Setup), the Mac's entitlements, the Linux build container. |
 | `scripts/` | Setup, build, and packaging scripts (below). |
 | `docs/` | The local API (`API.md`), plugins (`PLUGINS.md`), and how classic Eudora's commands map to this one (`CLASSIC-UI.md`). |
 
-The user manual is in `crates/eudora-app/ui/help/` and opens from Help in the program (F1).
+The user manual is in `crates/eleonora-app/ui/help/` and opens from Help in the program (F1).
 
 ## Set up a computer
 
@@ -76,17 +76,17 @@ On Windows, also `rustup show` should say the host is `x86_64-pc-windows-msvc` (
 ## Build and run
 
 ```bash
-cargo build --release -p eudora-app -p eudora-cli
+cargo build --release -p eleonora-app -p eleonora-cli
 ```
 
-Then start the window: `target/release/eudora` (`target\release\eudora.exe` on Windows). The
-command line is `target/release/eudora-cli`; `eudora-cli --help` lists its commands. The first build takes
+Then start the window: `target/release/eleonora` (`target\release\eleonora.exe` on Windows). The
+command line is `target/release/eleonora-cli`; `eleonora-cli --help` lists its commands. The first build takes
 several minutes; `Cargo.lock` pins every library to the tested version.
 
-A new library (where Eudora keeps the mail) is made in the system's usual place for program data
-the first time: `%LOCALAPPDATA%\Eudora\Library` on Windows, `~/Library/Application Support/Eudora/Library`
-on the Mac, `~/.local/share/eudora/library` on Linux. Name another with
-`eudora <folder>` or the `EUDORA_LIBRARY` variable. **Never put a library in Dropbox, OneDrive,
+A new library (where Eleonora keeps the mail) is made in the system's usual place for program data
+the first time: `%LOCALAPPDATA%\Eleonora\Library` on Windows, `~/Library/Application Support/Eleonora/Library`
+on the Mac, `~/.local/share/eleonora/library` on Linux. Name another with
+`eleonora <folder>` or the `ELEONORA_LIBRARY` variable (`EUDORA_LIBRARY`, and the other `EUDORA_` settings from before 2.0.0, still work). **Never put a library in Dropbox, OneDrive,
 or another syncing folder:** their file locks damage a live database.
 
 ## Test
@@ -95,7 +95,7 @@ or another syncing folder:** their file locks damage a live database.
 cargo test --workspace
 ```
 
-About 270 tests; the core's run in under a minute after the build. `cargo test -p eudora-core`
+About 270 tests; the core's run in under a minute after the build. `cargo test -p eleonora-core`
 runs only the core's. A few tests are marked `#[ignore]` (they need a real account or files of
 your own) and are skipped.
 
@@ -103,12 +103,12 @@ your own) and are skipped.
 
 | Platform | Command | Result |
 |---|---|---|
-| Windows (x64) | `.\scripts\build-installer.ps1` | `dist\Eudora-Setup-<version>.exe` |
-| Windows on ARM | `.\scripts\build-installer.ps1 -Arch arm64` | `dist\Eudora-Setup-<version>-arm64.exe` |
-| Mac | `bash scripts/build-mac.sh` | `dist/Eudora-<version>.dmg` (one app for Apple silicon and Intel) |
+| Windows (x64) | `.\scripts\build-installer.ps1` | `dist\Eleonora-Setup-<version>.exe` |
+| Windows on ARM | `.\scripts\build-installer.ps1 -Arch arm64` | `dist\Eleonora-Setup-<version>-arm64.exe` |
+| Mac | `bash scripts/build-mac.sh` | `dist/Eleonora-<version>.dmg` (one app for Apple silicon and Intel) |
 | Linux | `python3 scripts/build_linux.py --arch x86_64` (or `arm64`, `both`) | AppImage, .deb, and .rpm in `dist/`, built in Docker |
-| Android | `.\scripts\build-android.ps1` | `dist\Eudora-<version>-android.apk` |
-| iOS | `cargo tauri ios build` in `crates/eudora-app` | (needs an Apple developer account to install on a phone) |
+| Android | `.\scripts\build-android.ps1` | `dist\Eleonora-<version>-android.apk` |
+| iOS | `cargo tauri ios build` in `crates/eleonora-app` | (needs an Apple developer account to install on a phone) |
 
 The Mac package is signed with a "Developer ID Application" certificate when the keychain has
 one, and notarized when a `notarytool` profile is set up (see the top of `scripts/build-mac.sh`);
@@ -128,23 +128,23 @@ sign-in registrations or update server: for trying the code, not for release.
 
 The published source signs in nowhere and updates from nowhere until you give it your own
 identities. Set them as variables when building (no file to edit), or in
-`crates/eudora-core/src/official.rs`:
+`crates/eleonora-core/src/official.rs`:
 
 | Variable | What | Without it |
 |---|---|---|
-| `EUDORA_MICROSOFT_CLIENT_ID` | Your Microsoft app registration's Application (client) ID | Microsoft 365 and Outlook.com accounts can't be added; IMAP, POP3, and Gmail still work |
-| `EUDORA_GOOGLE_CLIENT` | The path of your Google OAuth client's JSON file ("Desktop app") | Gmail works through IMAP with an app password only |
-| `EUDORA_GOOGLE_IOS_CLIENT` | Your Google iOS OAuth client's `.plist` (iOS only) | No Google sign-in on iOS |
-| `EUDORA_UPDATE_URL_DEFAULT` | The web folder your signed update files are published in | The program doesn't update itself |
-| `EUDORA_DOWNLOAD_PAGE` | The page to download Eudora by hand | The update check names no page |
-| `EUDORA_MAC_TEAM` | Your Apple team ID (the Mac only installs updates signed by it) | The Mac version doesn't install updates itself |
+| `ELEONORA_MICROSOFT_CLIENT_ID` | Your Microsoft app registration's Application (client) ID | Microsoft 365 and Outlook.com accounts can't be added; IMAP, POP3, and Gmail still work |
+| `ELEONORA_GOOGLE_CLIENT` | The path of your Google OAuth client's JSON file ("Desktop app") | Gmail works through IMAP with an app password only |
+| `ELEONORA_GOOGLE_IOS_CLIENT` | Your Google iOS OAuth client's `.plist` (iOS only) | No Google sign-in on iOS |
+| `ELEONORA_UPDATE_URL_DEFAULT` | The web folder your signed update files are published in | The program doesn't update itself |
+| `ELEONORA_DOWNLOAD_PAGE` | The page to download Eleonora by hand | The update check names no page |
+| `ELEONORA_MAC_TEAM` | Your Apple team ID (the Mac only installs updates signed by it) | The Mac version doesn't install updates itself |
 | `FONTAWESOME_PRO` | The folder of a Font Awesome Pro package (needs a Pro license) | The Font Awesome Free icons in `ui/icons/free/` are used |
 
 For example, on Windows:
 
 ```powershell
-$env:EUDORA_MICROSOFT_CLIENT_ID = '00000000-0000-0000-0000-000000000000'
-cargo build --release -p eudora-app -p eudora-cli
+$env:ELEONORA_MICROSOFT_CLIENT_ID = '00000000-0000-0000-0000-000000000000'
+cargo build --release -p eleonora-app -p eleonora-cli
 ```
 
 ### A Microsoft app registration
@@ -155,38 +155,38 @@ registration:
 1. Supported account types: **Accounts in any organizational directory and personal Microsoft
    accounts**.
 2. Redirect URI: platform **Public client / native (mobile & desktop)**, `http://localhost`. For
-   iOS, also `net.planet.eudora://auth` (or your own app identifier's scheme).
-3. Authentication ▸ **Allow public client flows: Yes**. There is no client secret: Eudora signs in
+   iOS, also `net.planet.eleonora://auth` (or your own app identifier's scheme).
+3. Authentication ▸ **Allow public client flows: Yes**. There is no client secret: Eleonora signs in
    with the authorization code and PKCE.
 4. API permissions ▸ Microsoft Graph ▸ Delegated: `offline_access`, `User.Read`,
    `User.ReadBasic.All`, `Mail.ReadWrite`, `Mail.ReadWrite.Shared`, `Mail.Send`, `Mail.Send.Shared`,
    `MailboxSettings.ReadWrite`, `Contacts.ReadWrite`, `Contacts.ReadWrite.Shared`,
    `Calendars.ReadWrite`, `Calendars.ReadWrite.Shared`, `Tasks.ReadWrite`; for the Online Archive
    also `MailboxFolder.ReadWrite`, `MailboxItem.ImportExport`, `MailboxItem.ReadWrite`. The full
-   list Eudora asks for is `SIGN_IN_SCOPES` in `crates/eudora-core/src/graph.rs`.
-5. Copy the **Application (client) ID** into `EUDORA_MICROSOFT_CLIENT_ID`.
+   list Eleonora asks for is `SIGN_IN_SCOPES` in `crates/eleonora-core/src/graph.rs`.
+5. Copy the **Application (client) ID** into `ELEONORA_MICROSOFT_CLIENT_ID`.
 
 ### A Google OAuth client
 
 In the [Google Cloud console](https://console.cloud.google.com): make a project, enable the Gmail,
 People, and Google Calendar APIs, set up the OAuth consent screen, then Credentials ▸ Create
 credentials ▸ OAuth client ID ▸ **Desktop app**, and download its JSON. Point
-`EUDORA_GOOGLE_CLIENT` at that file. The build reads it into the program; it never goes into the
+`ELEONORA_GOOGLE_CLIENT` at that file. The build reads it into the program; it never goes into the
 source. (Google treats a desktop app's client secret as not secret, but keep the file out of your
 repository anyway.)
 
 ### Your own update server
 
 ```bash
-cargo run -p eudora-release -- keygen          # a new signing key (keep the private half safe)
-cargo run -p eudora-release -- publish --notes "What's new"
+cargo run -p eleonora-release -- keygen          # a new signing key (keep the private half safe)
+cargo run -p eleonora-release -- publish --notes "What's new"
 ```
 
-`keygen` writes the private key outside the project (`EUDORA_SIGNING_KEY` names where) and the
-public half into `crates/eudora-core/update_key.pub`, which the program carries: it installs only
+`keygen` writes the private key outside the project (`ELEONORA_SIGNING_KEY` names where) and the
+public half into `crates/eleonora-core/update_key.pub`, which the program carries: it installs only
 updates signed by that key. `publish` writes `dist/update-site/` (the installer,
 `latest-<platform>.json`, and its signature). Upload those files to the folder named by
-`EUDORA_UPDATE_URL_DEFAULT`: the installer first, the `.json` and `.sig` last.
+`ELEONORA_UPDATE_URL_DEFAULT`: the installer first, the `.json` and `.sig` last.
 
 ## Rules the code follows
 
@@ -199,12 +199,12 @@ updates signed by that key. `publish` writes `dist/update-site/` (the installer,
   searchable as text, and reported.
 - **Long jobs report real numbers** ("Importing message 120,000 of 1,412,000"), never only
   "Working…".
-- **Every feature is in the manual** (`crates/eudora-app/ui/help/`), the command line, and the local
+- **Every feature is in the manual** (`crates/eleonora-app/ui/help/`), the command line, and the local
   API (`docs/API.md`). A test checks that every command of the window is in the API or has a reason
   not to be.
 - **US spelling**, and the Oxford comma, in code, the interface, and documents.
 
 ## Questions and fixes
 
-Send bug reports and suggestions to **software@planet.net**. Eudora comes with no warranty and no
+Send bug reports and suggestions to **software@planet.net**. Eleonora comes with no warranty and no
 support, but the intention is to fix reported bugs quickly.

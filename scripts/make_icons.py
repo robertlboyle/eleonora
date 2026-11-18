@@ -1,14 +1,22 @@
-"""Builds Eudora's icon files from the vector originals in crates/eudora-app/icons/.
+"""Builds Eleonora's icon files from the vector originals in crates/eleonora-app/icons/.
 
 The SVGs are rendered by a headless Chromium-family browser (Edge, Chrome or Chromium: whichever
 this computer has, on Windows, the Mac or Linux) with a transparent background (no SVG library
-needed), then scaled down: the full design for 32 px and up, the simple envelope-and-pencil
-design for 16-24 px (the people turn to mush that small, as classic Eudora knew). Writes:
+needed), then scaled down: the full falcon (eleonora.svg) for 32 px and up, the bold white
+silhouette (eleonora-small.svg) for 16-24 px (the full drawing turns to mush that small). Classic
+Eudora's redrawn icons (eudora.svg, eudora-small.svg) stay for the Classic look. Writes:
   icons/icon.ico        every Windows size (16, 20, 24, 32, 40, 48, 64, 96, 128, 256)
   icons/icon.png        1024 px (macOS, Linux and anything else that wants a big picture)
   icons/32x32.png, 128x128.png, 128x128@2x.png
-  icons/tray-newmail.png, tray-nomail.png   (64 px, for the tray once Eudora has one)
-Run: python scripts/make_icons.py   (needs Pillow)
+  icons/tray-eleonora-newmail.png, tray-eleonora-nomail.png   (64 px: the tray in every look)
+  icons/tray-newmail.png, tray-nomail.png   (64 px: classic Eudora's in-tray, the Classic look only)
+  icons/classic-256.png   (classic Eudora's icon: the window's in the Classic look only)
+  gen/apple/Assets.xcassets/AppIcon.appiconset/*.png   (the iPhone's: below)
+The iPhone's icons are the falcon with its sky filling the whole square, opaque: iOS rounds the
+corners itself and refuses icons with transparency, so the rounded square with its margin would show
+a white rim (2026-11-18: until then the phone still had Eudora's icon). Each file there is redrawn at
+its own size.
+Run: python scripts/make_icons.py   (needs Pillow; --ios-only redraws only the iPhone's)
 """
 import os
 import shutil
@@ -21,13 +29,14 @@ from pathlib import Path
 
 from PIL import Image
 
-HERE = Path(__file__).resolve().parent.parent / "crates" / "eudora-app" / "icons"
+HERE = Path(__file__).resolve().parent.parent / "crates" / "eleonora-app" / "icons"
+IOS_ICONS = HERE.parent / "gen" / "apple" / "Assets.xcassets" / "AppIcon.appiconset"
 
 
 def browser() -> Path:
-    """A Chromium-family browser on this computer (EUDORA_BROWSER overrides)."""
-    if os.environ.get("EUDORA_BROWSER"):
-        return Path(os.environ["EUDORA_BROWSER"])
+    """A Chromium-family browser on this computer (ELEONORA_BROWSER overrides)."""
+    if os.environ.get("ELEONORA_BROWSER"):
+        return Path(os.environ["ELEONORA_BROWSER"])
     places = [
         Path(os.environ.get("ProgramFiles(x86)", r"C:\Program Files (x86)")) / "Microsoft/Edge/Application/msedge.exe",
         Path(os.environ.get("ProgramFiles", r"C:\Program Files")) / "Microsoft/Edge/Application/msedge.exe",
@@ -39,7 +48,7 @@ def browser() -> Path:
     places += [Path(p) for p in (shutil.which(n) for n in ("microsoft-edge", "google-chrome", "google-chrome-stable", "chromium", "chromium-browser")) if p]
     found = next((p for p in places if p.is_file()), None)
     if not found:
-        sys.exit("No Edge, Chrome or Chromium found (or set EUDORA_BROWSER to one)")
+        sys.exit("No Edge, Chrome or Chromium found (or set ELEONORA_BROWSER to one)")
     return found
 
 
@@ -87,11 +96,32 @@ def render(svg: Path, size: int, work: Path) -> Image.Image:
     return Image.open(out).convert("RGBA").crop((0, 0, size, size))
 
 
+def ios_icons(work: Path) -> None:
+    """The iPhone's app icons: the falcon full-bleed (its sky to the edges, square corners), opaque."""
+    source = (HERE / "eleonora.svg").read_text(encoding="utf-8")
+    sky = '<rect x="8" y="8" width="496" height="496" rx="112" fill="url(#sky)"/>'
+    if sky not in source:
+        sys.exit("eleonora.svg's sky isn't the rounded square this expects: update ios_icons()")
+    full = work / "eleonora-ios.svg"
+    full.write_text(source.replace(sky, '<rect x="0" y="0" width="512" height="512" fill="url(#sky)"/>'), encoding="utf-8")
+    big = render(full, 1024, work)
+    flat = Image.new("RGB", big.size, (10, 95, 216))
+    flat.paste(big, mask=big.getchannel("A"))
+    files = sorted(IOS_ICONS.glob("*.png"))
+    for n, png in enumerate(files, 1):
+        size = Image.open(png).size
+        flat.resize(size, Image.LANCZOS).save(png)
+        print(f"iPhone icon {n} of {len(files)}: {png.name} ({size[0]} px)")
+
+
 def main() -> None:
     with tempfile.TemporaryDirectory(ignore_cleanup_errors=True) as tmp:
         work = Path(tmp)
-        big = render(HERE / "eudora.svg", 1024, work)
-        small = render(HERE / "eudora-small.svg", 256, work)
+        ios_icons(work)
+        if "--ios-only" in sys.argv:
+            return
+        big = render(HERE / "eleonora.svg", 1024, work)
+        small = render(HERE / "eleonora-small.svg", 256, work)
         if big.getpixel((0, 0))[3] != 0:
             sys.exit("the render isn't transparent (Edge ignored the background color)")
         sizes = [16, 20, 24, 32, 40, 48, 64, 96, 128, 256]
@@ -101,8 +131,9 @@ def main() -> None:
         big.resize((32, 32), Image.LANCZOS).save(HERE / "32x32.png")
         big.resize((128, 128), Image.LANCZOS).save(HERE / "128x128.png")
         big.resize((256, 256), Image.LANCZOS).save(HERE / "128x128@2x.png")
-        for tray in ("tray-newmail", "tray-nomail"):
+        for tray in ("tray-eleonora-newmail", "tray-eleonora-nomail", "tray-newmail", "tray-nomail"):
             render(HERE / f"{tray}.svg", 256, work).resize((64, 64), Image.LANCZOS).save(HERE / f"{tray}.png")
+        render(HERE / "eudora.svg", 256, work).save(HERE / "classic-256.png")
     check = Image.open(HERE / "icon.ico")
     print("icon.ico sizes:", sorted(check.info.get("sizes", [])))
 

@@ -5,8 +5,8 @@ Status: **decided 2026-10-16**: WebAssembly plugins; sending confirmed per messa
 The standing rule: every program is scriptable, has an API and takes plugins, **securely**. The case to guard against: a bad program must not be able to quietly search someone's mail for bank details and send them somewhere.
 
 ## What exists already
-- **The `eudora-cli` command line** covers most of the window: accounts, import, search, list, show, rules, triage / spam, mark, labels, empty-trash, backup / restore, optimize, offline, signatures, spell, mail-stats, views, graph download… It opens the library directly, so it can do anything: it's for the owner of the computer, not for other programs.
-- **`eudora-web`**: a mail API over HTTPS for the user's own phone (password + passkeys). It's for people, not programs.
+- **The `eleonora-cli` command line** covers most of the window: accounts, import, search, list, show, rules, triage / spam, mark, labels, empty-trash, backup / restore, optimize, offline, signatures, spell, mail-stats, views, graph download… It opens the library directly, so it can do anything: it's for the owner of the computer, not for other programs.
+- **`eleonora-web`**: a mail API over HTTPS for the user's own phone (password + passkeys). It's for people, not programs.
 
 ## What gets built
 
@@ -14,15 +14,15 @@ The standing rule: every program is scriptable, has an API and takes plugins, **
 Every action the window, the command line, the web interface and the API can take goes through **one table of commands**: name, arguments, result, and **the permission it needs**. The window's Tauri commands, the CLI's subcommands and the API's methods all call into it, so they can't drift apart, and the API automatically covers every function the window has.
 
 ### 2. The local API
-- **Transport:** JSON-RPC 2.0 over a **named pipe** on Windows (`\\.\pipe\\eudora-<user>`) and a **Unix socket** on the Mac (`~/Library/Application Support/Eudora/api.sock`, mode 0600). **No network port at all**: other computers can't reach it, and neither can web pages.
+- **Transport:** JSON-RPC 2.0 over a **named pipe** on Windows (`\\.\pipe\\eleonora-<user>`) and a **Unix socket** on the Mac (`~/Library/Application Support/Eleonora/api.sock`, mode 0600). **No network port at all**: other computers can't reach it, and neither can web pages.
   - On Windows the pipe's security descriptor allows only the signed-in user.
 - **Versioned:** methods are named `v1.mail.search`, `v1.mail.send`… Version 1 stays as it is once released; changes come as `v2.…`.
-- **Served by:** the window while it's open; by `eudora-cli api serve` when it isn't (a command line service; it can run at startup).
+- **Served by:** the window while it's open; by `eleonora-cli api serve` when it isn't (a command line service; it can run at startup).
 - **Documented:** a reference of every method, its arguments, results and permission, generated from the command table. It becomes a chapter of the manual.
 
 ### 3. Who may do what: clients and permissions
-- **Nothing is reachable until the user grants it.** A program asks once (`v1.auth.request`: its name, its publisher, why it wants it, the permissions it asks for). Eudora shows the user a window, **"Allow 'Invoice Exporter' to: read headers in Inbox…?"** Each permission is a tick box, so the user can grant less than asked. The program gets **its own token**.
-  - The token is kept by Windows' DPAPI / the Mac Keychain on the client's side; Eudora keeps only its hash.
+- **Nothing is reachable until the user grants it.** A program asks once (`v1.auth.request`: its name, its publisher, why it wants it, the permissions it asks for). Eleonora shows the user a window, **"Allow 'Invoice Exporter' to: read headers in Inbox…?"** Each permission is a tick box, so the user can grant less than asked. The program gets **its own token**.
+  - The token is kept by Windows' DPAPI / the Mac Keychain on the client's side; Eleonora keeps only its hash.
 - **Permissions are narrow and named:**
 
   | Permission | What it allows |
@@ -45,26 +45,26 @@ Every action the window, the command line, the web interface and the API can tak
   | `contacts.read` / `contacts.write` | the address book: list, read, export / add, change, merge, delete (on the servers too) |
 
   Each one can be limited to **some accounts and folders** ("Inbox of pat@example.com only"); whatever works on the whole library (All Mail, statistics, a backup) needs an unlimited grant.
-- **Every function of the window is a method**: 113 in version 1, `eudora-cli api methods` lists them; the command line runs any of them as the owner with `eudora-cli call METHOD JSON`. A test keeps every window command either in the API or on the short window-only list.
+- **Every function of the window is a method**: 113 in version 1, `eleonora-cli api methods` lists them; the command line runs any of them as the owner with `eleonora-cli call METHOD JSON`. A test keeps every window command either in the API or on the short window-only list.
 - **What no program can do, by design:** grant itself permissions, approve its own sends, raise its own trust, change the API's settings (the user's alone, in the window); read secrets (passwords, sign-in tokens, the sync recovery phrase, the Spamhaus key; a backup through the API never holds passwords).
 - **Sensitive data behind the strongest grants:** bodies and attachments are separate from headers. The grant window says it plainly: *"can read the full text of your mail"*.
 - **One place to see and revoke:** Preferences ▸ **Programs and plugins** lists every client and plugin with its permissions, when it last did something, and Revoke.
-- **Audit log:** every call (client, method, what it touched as counts and folders, never the mail itself, allowed or refused) is kept in the library itself (`api_log`), shown in that window (and `eudora-cli api log`), kept 90 days. Full by default; per program it can be turned down to changes only, or refusals only, once trusted.
+- **Audit log:** every call (client, method, what it touched as counts and folders, never the mail itself, allowed or refused) is kept in the library itself (`api_log`), shown in that window (and `eleonora-cli api log`), kept 90 days. Full by default; per program it can be turned down to changes only, or refusals only, once trusted.
 - **Rate limits** per client: for example, bodies at most 1,000 messages a minute by default. A burst beyond that is refused and logged, so a "read everything and ship it out" program is slowed and visible.
-- **An extra line of defense against the bank-details case:** a client granted `mail.bodies.read` that also asks to send, or to reach the network through Eudora, gets a **separate, explicit warning**. Eudora can't stop a program from using the network itself; it can make sure the user sees what they're granting, and log it.
+- **An extra line of defense against the bank-details case:** a client granted `mail.bodies.read` that also asks to send, or to reach the network through Eleonora, gets a **separate, explicit warning**. Eleonora can't stop a program from using the network itself; it can make sure the user sees what they're granting, and log it.
 
 ### 4. Plugins
 - **What a plugin can add:** menu items (in a "Plugins" menu, and in the right-click menu), commands, a side panel or dialog view (HTML, shown in a sandboxed frame like mail), and rule actions ("Run plugin X" in a rule).
-- **How it runs:** isolated, never inside Eudora with its powers. ❓ Two ways (see decision 1):
-  - **(A) A separate process.** The plugin is a program Eudora starts; it talks to Eudora only through the API, with the permissions the user granted it. Any language. Simple, no new library. The isolation is the operating system's process boundary plus the API's permissions. It can still use the network and files itself, like any program the user runs.
-  - **(B) WebAssembly.** The plugin is a .wasm file run inside Eudora by a WebAssembly engine (wasmtime, Apache-2.0 / MIT). It can do **nothing** but what Eudora hands it: no network, no files, no other programs, unless granted. This is the strongest isolation, the "bad plugin can't send the bank details anywhere" guarantee. The cost: a large new library (wasmtime, about 10-15 MB in the program, and a longer build), and plugins must be written for WebAssembly (Rust, C, Go, AssemblyScript…).
+- **How it runs:** isolated, never inside Eleonora with its powers. ❓ Two ways (see decision 1):
+  - **(A) A separate process.** The plugin is a program Eleonora starts; it talks to Eleonora only through the API, with the permissions the user granted it. Any language. Simple, no new library. The isolation is the operating system's process boundary plus the API's permissions. It can still use the network and files itself, like any program the user runs.
+  - **(B) WebAssembly.** The plugin is a .wasm file run inside Eleonora by a WebAssembly engine (wasmtime, Apache-2.0 / MIT). It can do **nothing** but what Eleonora hands it: no network, no files, no other programs, unless granted. This is the strongest isolation, the "bad plugin can't send the bank details anywhere" guarantee. The cost: a large new library (wasmtime, about 10-15 MB in the program, and a longer build), and plugins must be written for WebAssembly (Rust, C, Go, AssemblyScript…).
 - **Identity:** each plugin has a manifest (name, publisher, version, permissions asked, menu items), shown at install time.
   - ❓ **Signing** (decision 3): unsigned plugins allowed after a warning, or signed only.
-- **Installing:** Tools ▸ Plugins ▸ Install… (a .eudora-plugin file = manifest + program or .wasm), then the same grant window as API clients.
+- **Installing:** Tools ▸ Plugins ▸ Install… (a .eleonora-plugin file = manifest + program or .wasm), then the same grant window as API clients.
 
 ### 5. The command line
 - **Stays the owner's tool** (full access, as now).
-- **Gains `eudora-cli api …` to manage the API:** `serve`, `clients`, `revoke`, `audit`.
+- **Gains `eleonora-cli api …` to manage the API:** `serve`, `clients`, `revoke`, `audit`.
 
 ## Decisions for the user (❓)
 1. **Plugin isolation:**
@@ -74,7 +74,7 @@ Every action the window, the command line, the web interface and the API can tak
    - **Recommended: B for plugins (the user's security worry is exactly what it prevents), A only for "programs" using the API.**
 2. **Sending through the API:** always confirmed by the user in a window (recommended), or allowed without asking for programs the user marks as trusted.
 3. **Unsigned plugins:** allowed after a clear warning (recommended for now; there's no signing service yet), or signed only.
-4. **Where the API runs when the window is closed:** `eudora-cli api serve` started by hand or at sign-in (recommended: off until the user turns it on in Preferences), or never (the API only while the window is open).
+4. **Where the API runs when the window is closed:** `eleonora-cli api serve` started by hand or at sign-in (recommended: off until the user turns it on in Preferences), or never (the API only while the window is open).
 
 ## Build order once decided
 1. The command table and permission model in the core, with tests (permissions, scopes, rate limits, audit).

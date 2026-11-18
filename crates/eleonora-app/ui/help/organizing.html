@@ -1,0 +1,100 @@
+<section id="moving" data-title="Moving, copying, and deleting" data-index="transfer; move; copy; Copy To; Transfer To; delete; Ctrl+D; undo; Ctrl+Z; Trash; Deleted Items; drag to folder">
+<h1>Moving, copying, and deleting</h1>
+<ul>
+<li><b>Transfer To…</b> (<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>T</kbd>, <span class="ui">Transfer</span> on the toolbar): type part of a folder's name to find it in any account, then <kbd>Enter</kbd>. The arrow keys open and close folders in the list.</li>
+<li><b>Copy To…</b>: the same, keeping the message where it is too.</li>
+<li><b>Transfer ▸ To a New Mailbox…</b>: makes a folder and moves the messages into it.</li>
+<li><b>Delete</b> (<kbd>Ctrl</kbd>+<kbd>D</kbd> or the <kbd>Delete</kbd> key): moves the messages to the account's Trash (Deleted Items in Microsoft 365).</li>
+<li><b>Edit ▸ Undo</b> (<kbd>Ctrl</kbd>+<kbd>Z</kbd>) moves them back.</li>
+</ul>
+<p>Moves happen in Eleonora at once and are made on the server in the background, even if you're offline at the time. A move between two accounts is a copy: the original stays on its own server.</p>
+<p>These work on a selection of many messages, and on search results (each message from its own folder).</p>
+</section>
+
+<section id="save-as-files" data-title="Saving messages as files (.msg and .eml)" data-index="Save as Files; Export as .eml or .msg Files; File Export Messages; export messages; export search results; skip duplicates; drag message; drag to desktop; drag to folder; save message; export message; msg; .msg; Outlook msg; eml; .eml; original message; legal evidence; e-discovery; v1.mail.save_as">
+<h1>Saving messages as files (.msg and .eml)</h1>
+<p>Drag messages from the message list onto your desktop or into a folder in File Explorer (the Finder on a Mac) to save them there as files, each named by the message's date and time and then its subject, as <code>202504211530 Re Whatever</code> (year, month, day, hour, and minute in your computer's time), so the files sort by date and two messages with the same subject don't clash. Colons are left out of the subject, and slashes become dashes, as Windows doesn't allow them in a file name. The date is the one the message list shows, else when the message came into Eleonora, so every file has one. Select several first (<kbd>Ctrl</kbd>+click, <kbd>Shift</kbd>+click, <kbd>Ctrl</kbd>+<kbd>A</kbd>) and drag any of them to save them all.</p>
+<ul>
+<li><b>Drag</b>: Outlook's <b>.msg</b> files, which Outlook and most legal and archiving tools open.</li>
+<li><b>Hold <kbd>Ctrl</kbd> or <kbd>Shift</kbd> while dragging</b>: <b>.eml</b> files, the original message exactly as Eleonora received it, byte for byte. Outlook, Eleonora, and other mail programs open these too.</li>
+</ul>
+<p>Eleonora writes the files in the background, with the count on the status bar ("Writing messages as .msg files: 120 of 400"), so you can carry on meanwhile. The drag starts once they're written. If you let go of the mouse before that, Eleonora asks which folder to put them in.</p>
+
+<h2>Which to use as evidence</h2>
+<p>An <b>.eml</b> is the message itself: the same bytes the mail server delivered, so it can be checked against a copy kept anywhere else, and a digital signature on it still checks. Use .eml when the exact original matters.</p>
+<p>A <b>.msg</b> is what Outlook saves: the message as Outlook's own fields, not its original bytes. Outlook's own .msg files are made the same way, because Microsoft 365 converts every message into those fields when it arrives. Eleonora writes a .msg the way Microsoft 365 and Outlook do:</p>
+<ul>
+<li>The message's <b>header block is kept word for word</b> (every Received line, the authentication results, the Message-ID), as Outlook keeps it. In Outlook it's under <span class="ui">File ▸ Properties ▸ Internet headers</span>.</li>
+<li><b>Every attachment is kept byte for byte.</b> A forwarded message attached to it is kept as a message inside it.</li>
+<li>The text and the HTML are kept as text and HTML. Their encoding may change (Eleonora writes the HTML as UTF-8), so the words are the same but the bytes may not be.</li>
+<li>A message that's <b>digitally signed or encrypted</b> (S/MIME) is kept whole and unchanged inside the .msg, as Outlook keeps one, so its signature can still be checked.</li>
+<li>A message from the <b>Online Archive</b> is written from Exchange's own copy of it, the one Eleonora keeps when <a href="#keep-originals">Keep original messages exactly</a> is on: the fields exactly as Microsoft holds them.</li>
+</ul>
+<p>Every file Eleonora saves is marked as downloaded from the Internet, as attachments are.</p>
+<p>Programs and scripts can save messages the same way: <code>eleonora-cli call v1.mail.save_as '{"ids": [123, 456], "dir": "C:/Evidence", "format": "eml"}'</code> (format <code>msg</code> or <code>eml</code>). See <a href="#api">the local API</a>.</p>
+<h2 id="export-files">Exporting to a folder: Export as .eml or .msg Files…</h2>
+<p>For many messages at once, or a whole search (for legal discovery, archiving, or records), choose them (click, <kbd>Ctrl</kbd>+click, <kbd>Shift</kbd>+click, or <kbd>Ctrl</kbd>+<kbd>A</kbd> for every one in the list), then right-click one of them and choose <span class="ui">Export as .eml or .msg Files…</span>, or choose <span class="ui">File ▸ Export ▸ Messages as .eml or .msg Files…</span> (in the Outlook-style, Thunderbird-style, Gmail-style, and Yahoo-style looks, <span class="ui">Export Messages as .eml or .msg Files…</span> in their File or Mail menu). With search results shown and only some of them chosen, Eleonora asks whether to export just the chosen ones or every message the search found. Pick <b>.msg</b> (Outlook) or <b>.eml</b> (the original message byte for byte), then the folder. Eleonora writes the files in the background; the status bar counts them as it goes ("Saving messages as .msg files: 1,200 of 4,000 (1,180 written, 20 duplicates skipped)…"), and a summary says what was done when it ends.</p>
+<p>Duplicates are skipped and counted: a message chosen twice, a second copy of the same message (the same Message-ID, kept in two mailboxes), and a message whose file is already in the folder exactly as it would be written (saved there before). So saving the same search into the same folder again writes only what's new. A message that can't be written is named in the summary with why.</p>
+</section>
+
+<section id="mailboxes" data-title="Making, renaming, and deleting mailboxes" data-index="new mailbox; new folder; rename folder; delete folder; mailbox; subfolder; Mailbox New; PersonMetadata; ExternalContacts; Yammer Root; system folders">
+<h1>Making, renaming, and deleting mailboxes</h1>
+<ul>
+<li><b>Make one</b>: <span class="ui">Mailbox ▸ New Mailbox…</span>, or right-click an account (<span class="ui">New Mailbox…</span>) or a folder (<span class="ui">New Mailbox Inside…</span>). Type "/" in the name for levels, such as <code>Projects/2026</code>.</li>
+<li><b>Rename</b>: right-click the folder, <span class="ui">Rename…</span>.</li>
+<li><b>Delete</b>: right-click the folder, <span class="ui">Delete…</span>. The folder, its mail, and its folders go into Deleted Items (or Trash), as Outlook does. A folder already in the Trash is removed only when it's empty.</li>
+</ul>
+<p>Each change is made on the server too (Microsoft 365, IMAP, Gmail labels). The server's own folders (Inbox, Sent, Drafts, Deleted Items, Junk, Archive) and the Online Archive's can't be renamed or deleted. A folder renamed in Outlook or on your phone takes its new name in Eleonora too.</p>
+<p class="note">Some folders Microsoft 365 keeps for itself hold no mail: <b>PersonMetadata</b> (the People app's data about your contacts), <b>ExternalContacts</b>, and <b>Yammer Root</b> (Viva Engage). Eleonora neither downloads nor shows them. Outlook on the web may still list them.</p>
+</section>
+
+<section id="marks" data-title="Status, priority, and labels" data-index="status; read; unread; replied; forwarded; priority; labels; categories; colors; Change Label; Outlook categories; edit labels">
+<h1>Status, priority, and labels</h1>
+<h2>Status</h2>
+<p><span class="ui">Message ▸ Change Status</span>: Unread, Read, Replied, Forwarded, Redirected. Read and unread reach the server.</p>
+<h2>Priority</h2>
+<p><span class="ui">Message ▸ Change Priority</span>: Highest to Lowest, Raise, Lower, or As the Message Says. High priority shows as a flag on IMAP servers and as a star in Gmail.</p>
+<h2>Labels</h2>
+<p><span class="ui">Message ▸ Change Label…</span>: tick the labels the message should carry (press <kbd>1</kbd>–<kbd>9</kbd> to tick quickly), or None. A message can carry several. Labels show as colored chips in the list.</p>
+<p>In Microsoft 365 mailboxes, labels are Outlook's <b>categories</b> with the same names, so Outlook and your phone show them too. On IMAP servers they're keywords.</p>
+<p>Edit the list in <span class="ui">Settings ▸ Mail ▸ Labels</span> (or <span class="ui">Edit Labels…</span> in the Change Label window). Renaming a label renames it on its messages. The list travels to your other computers.</p>
+</section>
+
+<section id="trash" data-title="Emptying the Trash" data-index="Empty Trash; delete forever; Deleted Items; Recoverable Items; purge">
+<h1>Emptying the Trash</h1>
+<p><span class="ui">Special ▸ Empty Trash…</span> lists each account's Trash with how many messages it holds, and asks before doing anything.</p>
+<ul>
+<li><b>Microsoft 365</b>: deleted from Deleted Items on the server. Exchange still keeps them in Recoverable Items for a while, as when you empty Deleted Items in Outlook.</li>
+<li><b>IMAP</b>: deleted on the server.</li>
+<li><b>Gmail</b>: left in Gmail's Trash, which Gmail empties after 30 days (so a mistake can still be undone there).</li>
+<li><b>The Online Archive's Deleted Items</b> are never touched.</li>
+</ul>
+<p>Messages that were only in the Trash leave the library. Their space comes back at the next <a href="#maintenance">maintenance</a>.</p>
+</section>
+
+<section id="open-files" data-title="Opening .eml, .msg, .ics, and .vcf files, and mail links" data-index="eml; msg; vcf; .vcf; vCard; contact card; contact file; add contact from file; update contact; .msg; Outlook msg; Outlook message file; message viewer; open msg; view msg; ics; mailto; mail links; email links; default email program; open file; Ctrl+O; double-click; default mail program; calendar file; msg-to-eml">
+<h1>Opening .eml, .msg, .ics, and .vcf files, and mail links</h1>
+<p>Double-click a <b>.eml</b> message or an Outlook <b>.msg</b> file and it opens in Eleonora's <b>message viewer</b>: a small program of its own, so it shows in about half a second, whether or not Eleonora's window is open, and never waits for your library or its downloading. Each file opens in a viewer of its own; close it with <kbd>Esc</kbd>. The file isn't added to your library (to add files, use <a href="#import">Import</a>).</p>
+<p>The viewer shows the message with its sender, recipients, date, and attachments, and has tabs for the <b>Text</b>, the <b>Headers</b>, and the <b>Source</b> (for a .msg, the internet message Eleonora made of it). Its buttons:</p>
+<ul>
+<li><b>Reply</b> (<kbd>Ctrl</kbd>+<kbd>R</kbd>), <b>Reply All</b> (<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>R</kbd>), and <b>Forward</b> (<kbd>Ctrl</kbd>+<kbd>F</kbd>) start a new message in Eleonora's window (which opens if it isn't running), with the message quoted or attached as usual.</li>
+<li><b>Save as .eml</b> (<kbd>Ctrl</kbd>+<kbd>S</kbd>) saves the message as an .eml file in a folder you choose.</li>
+<li><b>Print</b> (<kbd>Ctrl</kbd>+<kbd>P</kbd>) prints it with its header lines.</li>
+<li>Click an attachment to open it with its program, or its arrow to save it; <b>Save All…</b> saves every one.</li>
+</ul>
+<p><b>The same safety as Eleonora's window:</b> the message can't run scripts or load anything from the internet. Pictures from the web show only when you click <b>Show pictures</b>, or by themselves for senders on your always-show list (<a href="#pictures">Pictures from the web</a>). A message that looks like a fraud is marked in red, its links don't work, and its pictures and attachments aren't opened, with no way to turn that off. Attachments that are programs are never opened (save one only if you trust it), and every file the viewer saves is marked as downloaded from the internet, so Windows and Office treat it with care. The viewer reads your library's whitelist and always-show list when it can do so at once; when it can't, it trusts no one and asks about pictures every time.</p>
+<p>A .msg is Outlook's own kind of file (properties, not the message as it came). Eleonora turns it back into an internet message: the header block exactly as Outlook kept it, the text, the formatted (HTML) text (also when Outlook kept it only inside rich text), every attachment byte for byte, forwarded messages as messages, and a signed or encrypted message whole. From a command prompt, <code>eleonora-cli msg-to-eml FILE.msg</code> writes the same .eml beside it (<code>--json</code> describes it instead); <code>eudora FILE.msg</code> opens the viewer.</p>
+<p><span class="ui">File ▸ Open File…</span> (<kbd>Ctrl</kbd>+<kbd>O</kbd>) in Eleonora's window opens an .eml in a message window there, as if it were in your library.</p>
+<p>A <b>.ics</b> calendar file opens in a window listing its events: time (in your time zone), place, organizer, people, and notes. <b>Add to my calendar</b> puts an event on one of your calendars without inviting its people.</p>
+<p>A <b>.vcf</b> contact card (a vCard, one contact or a whole address book) opens in a window listing each contact in it: name, company, email addresses, phone numbers, and addresses. Eleonora looks for each one in your address book by its email addresses and phone numbers:</p>
+<ul>
+<li><b>Already there:</b> <b>Update</b> it. The contact takes the file's values where the two differ and keeps every email address, phone number, address, and note it already had. Or <b>Add as a new contact</b> anyway.</li>
+<li><b>Not there yet:</b> <b>Add to contacts</b>, into the address book chosen at the top (the one you used last, at first).</li>
+<li>A file of several contacts also has <b>Add all new</b> and <b>Update all already there</b>, each asking first.</li>
+</ul>
+<p>The change is made in Eleonora at once and on the contact's server (Microsoft 365, Google, or CardDAV) with the next check.</p>
+<p>To make Eleonora open these files, on Windows right-click one, choose <span class="ui">Open with ▸ Choose another app ▸ Eleonora ▸ Always</span> once for each kind (.eml, .msg, .ics, .vcf), or set them in <span class="ui">Settings ▸ Apps ▸ Default apps ▸ Eleonora</span> (Windows lets no program make itself the default). On the Mac, use the Finder's <span class="ui">Get Info ▸ Open with ▸ Change All…</span>.</p>
+<h2>Mail links (mailto:)</h2>
+<p>Eleonora can be the program that opens <b>mailto:</b> links: an email address you click on a web page or in another program starts a new message in Eleonora, with the address, any Cc and Bcc, the subject, and the text the link carries. Nothing is sent until you choose Send. Links in your mail do the same.</p>
+<p>To choose Eleonora for mail links: on Windows, <span class="ui">Settings ▸ Apps ▸ Default apps ▸ Eleonora</span>, then set <b>MAILTO</b> to Eleonora (Windows lets no program choose itself); on the Mac, <span class="ui">Mail ▸ Settings ▸ General ▸ Default email reader ▸ Eleonora</span>; on Linux, your desktop's default applications settings (Eleonora's .deb and .rpm offer it).</p>
+</section>

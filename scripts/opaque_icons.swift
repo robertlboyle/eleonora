@@ -2,7 +2,7 @@
 // icons that have one (App Store Connect checks the 1024-pixel icon). Uses only macOS's own
 // CoreGraphics, so nothing to install (2026-10-27).
 //
-//   swift scripts/opaque_icons.swift crates/eudora-app/gen/apple/Assets.xcassets/AppIcon.appiconset/*.png
+//   swift scripts/opaque_icons.swift crates/eleonora-app/gen/apple/Assets.xcassets/AppIcon.appiconset/*.png
 //
 // Each file is replaced in place, at the same size.
 import CoreGraphics

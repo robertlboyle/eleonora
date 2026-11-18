@@ -1,6 +1,6 @@
 # Third-party notices
 
-Eudora is © Planet Networks, licensed MIT OR Apache-2.0 (`LICENSE-MIT`, `LICENSE-APACHE`).
+Eleonora is © Planet Networks, licensed MIT OR Apache-2.0 (`LICENSE-MIT`, `LICENSE-APACHE`).
 It includes or uses the following works under their own licenses.
 
 ## Classic Eudora (QUALCOMM)
@@ -47,24 +47,24 @@ Pro under Planet Networks' license.
 
 ## ocrs text recognition models
 
-Where the system has no OCR of its own, Eudora reads pictures with ocrs
+Where the system has no OCR of its own, Eleonora reads pictures with ocrs
 (https://github.com/robertknight/ocrs, code MIT OR Apache-2.0). Its two models,
 `text-detection.onnx` and `text-recognition.onnx`, © Robert Knight, are licensed
 **CC BY-SA 4.0** (https://creativecommons.org/licenses/by-sa/4.0/) and were trained on the
-HierText dataset (CC BY-SA 4.0). They aren't shipped with Eudora: they're downloaded, unchanged,
+HierText dataset (CC BY-SA 4.0). They aren't shipped with Eleonora: they're downloaded, unchanged,
 from https://ocrs-models.s3-accelerate.amazonaws.com/ the first time they're needed.
 
 ## Natural voices (a separate download)
 
-The natural voices are not part of Eudora's installer: `eudora-voice` and the Kokoro model are downloaded
-only when asked for (Settings ▸ General ▸ Speech). Their notices are in `crates/eudora-voice/NOTICES.txt`
-(also `eudora-voice --notices`): Kokoro-82M (Apache-2.0), misaki-rs (MIT), rten (MIT / Apache-2.0), the CMU
+The natural voices are not part of Eleonora's installer: `eleonora-voice` and the Kokoro model are downloaded
+only when asked for (Settings ▸ General ▸ Speech). Their notices are in `crates/eleonora-voice/NOTICES.txt`
+(also `eleonora-voice --notices`): Kokoro-82M (Apache-2.0), misaki-rs (MIT), rten (MIT / Apache-2.0), the CMU
 Pronouncing Dictionary (BSD-2-Clause, Carnegie Mellon University), and the NRL letter-to-sound rules
 (public domain).
 
 ## Rust libraries
 
-Eudora is built from Rust libraries (listed in `Cargo.lock`), each under a permissive license
+Eleonora is built from Rust libraries (listed in `Cargo.lock`), each under a permissive license
 (MIT, Apache-2.0, Apache-2.0 WITH LLVM-exception, BSD, ISC, Zlib, Unlicense or MPL-2.0); `cargo metadata` lists each one's license. Among
 them: Tantivy, SQLite (public domain, through rusqlite), Tauri, rustls and ring, lopdf, ocrs, rten,
 image, wasmtime and Cranelift (the Bytecode Alliance; Apache-2.0 WITH LLVM-exception: the plugins' sandbox), Microsoft's `windows` crate, and tts (MIT; speech, over each system's own voices; on Linux through speech-dispatcher's client library, used under its MIT / Apache-2.0 choice and linked to the system's libspeechd).

@@ -1,10 +1,10 @@
-# Builds Eudora for Android: dist\Eudora-<version>-android.apk (ARM64 phones).
+# Builds Eleonora for Android: dist\Eleonora-<version>-android.apk (ARM64 phones).
 #
-#   .\scripts\build-android.ps1           # release: optimized, signed with Eudora's Android key
+#   .\scripts\build-android.ps1           # release: optimized, signed with Eleonora's Android key
 #   .\scripts\build-android.ps1 -Debug    # debug build (unoptimized, large), for trying things out
 #
 # Needs the Android SDK, NDK 29, JDK 17 and tauri-cli (BUILDING.md ▸ Android). The signing
-# key is kept outside the project; EUDORA_ANDROID_SIGNING names its properties file (else
+# key is kept outside the project; ELEONORA_ANDROID_SIGNING names its properties file (else
 # the release APK is left unsigned). Steps (counted): 1 the environment, 2 the build, 3 the APK.
 #   .\scripts\build-android.ps1 -Debug -Target x86_64   # for the emulator (an x86_64 Android)
 param([switch]$Debug, [ValidateSet('aarch64', 'x86_64')][string]$Target = 'aarch64')
@@ -30,10 +30,12 @@ $env:PATH = "$env:USERPROFILE\.cargo\bin;$env:JAVA_HOME\bin;$env:PATH"
 $short = Join-Path $env:USERPROFILE '.jt'
 New-Item -ItemType Directory -Force $short | Out-Null
 $env:JAVA_TOOL_OPTIONS = "-Djdk.net.unixdomain.tmpdir=$short"
-if (-not $env:EUDORA_ANDROID_SIGNING) {
-    $env:EUDORA_ANDROID_SIGNING = (Get-ItemProperty HKCU:\Environment -ErrorAction SilentlyContinue).EUDORA_ANDROID_SIGNING
+if (-not $env:ELEONORA_ANDROID_SIGNING) {
+    $saved = Get-ItemProperty HKCU:\Environment -ErrorAction SilentlyContinue
+    # (the setting's name before 2.0.0 still found)
+    $env:ELEONORA_ANDROID_SIGNING = if ($saved.ELEONORA_ANDROID_SIGNING) { $saved.ELEONORA_ANDROID_SIGNING } elseif ($env:EUDORA_ANDROID_SIGNING) { $env:EUDORA_ANDROID_SIGNING } else { $saved.EUDORA_ANDROID_SIGNING }
 }
-if (-not $Debug -and -not ($env:EUDORA_ANDROID_SIGNING -and (Test-Path $env:EUDORA_ANDROID_SIGNING))) {
+if (-not $Debug -and -not ($env:ELEONORA_ANDROID_SIGNING -and (Test-Path $env:ELEONORA_ANDROID_SIGNING))) {
     Write-Output '  (no signing key found: the release APK will be unsigned and won''t install)'
 }
 # A phone needs no symbols or line tables (desktop builds keep them for crash reports): without
@@ -43,7 +45,7 @@ $env:CARGO_PROFILE_RELEASE_STRIP = 'symbols'
 
 Write-Output 'Step 2 of 3: building (Rust, then Gradle)'
 $version = (Select-String -Path (Join-Path $root 'Cargo.toml') -Pattern '^version\s*=\s*"([^"]+)"' | Select-Object -First 1).Matches[0].Groups[1].Value
-Push-Location (Join-Path $root 'crates\eudora-app')
+Push-Location (Join-Path $root 'crates\eleonora-app')
 try {
     $build = @('tauri', 'android', 'build', '--apk', '--target', $Target, '--ci')
     if ($Debug) { $build += '--debug' }
@@ -58,9 +60,9 @@ try {
 
 Write-Output 'Step 3 of 3: the APK'
 $kind = if ($Debug) { 'debug' } else { 'release' }
-$apk = Join-Path $root "crates\eudora-app\gen\android\app\build\outputs\apk\universal\$kind\app-universal-$kind.apk"
+$apk = Join-Path $root "crates\eleonora-app\gen\android\app\build\outputs\apk\universal\$kind\app-universal-$kind.apk"
 $out = Join-Path $root 'dist'
 New-Item -ItemType Directory -Force $out | Out-Null
-$name = if ($Debug) { "Eudora-$version-android-debug.apk" } else { "Eudora-$version-android.apk" }
+$name = if ($Debug) { "Eleonora-$version-android-debug.apk" } else { "Eleonora-$version-android.apk" }
 Copy-Item $apk (Join-Path $out $name) -Force
 Write-Output ("APK: {0} ({1:N1} MB)" -f (Join-Path $out $name), ((Get-Item (Join-Path $out $name)).Length / 1MB))

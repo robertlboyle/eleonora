@@ -65,4 +65,4 @@ fi
 
 echo
 echo "Done. Then:"
-echo "  cargo build --release -p eudora-app -p eudora-cli"
+echo "  cargo build --release -p eleonora-app -p eleonora-cli"

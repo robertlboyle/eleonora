@@ -1,12 +1,12 @@
-# Writing an Eudora plugin
+# Writing an Eleonora plugin
 
-A plugin adds commands to Eudora: in Tools ▸ Plugins, in the right-click menu on messages, and as an action rules can run. It's **one WebAssembly file** (`.wasm`) that Eudora runs sealed off:
-- It can reach nothing but **Eudora's API**, with only the permissions the user granted it in Eudora's grant window. That means no files, no network, no other programs and no clock.
+A plugin adds commands to Eleonora: in Tools ▸ Plugins, in the right-click menu on messages, and as an action rules can run. It's **one WebAssembly file** (`.wasm`) that Eleonora runs sealed off:
+- It can reach nothing but **Eleonora's API**, with only the permissions the user granted it in Eleonora's grant window. That means no files, no network, no other programs and no clock.
 - Every API call it makes is checked, rate-limited and **logged** like any program's (Preferences ▸ Programs and plugins ▸ Log).
 - Each run may use at most 256 MB of memory and a bounded amount of work; a runaway loop is stopped.
 - The file is checked against its checksum before every run; a file changed after installing never runs.
 
-Plugins aren't signed yet: Eudora shows a warning before installing one.
+Plugins aren't signed yet: Eleonora shows a warning before installing one.
 
 ## The file
 
@@ -14,12 +14,14 @@ A WebAssembly module (`wasm32-unknown-unknown`, no WASI) with:
 
 | | |
 |---|---|
-| custom section `eudora-plugin` | the manifest (JSON, below) |
+| custom section `eleonora-plugin` | the manifest (JSON, below) |
 | export `memory` | its memory |
-| export `alloc(len: i32) -> i32` | gives Eudora room for `len` bytes (Eudora writes inputs and API answers there) |
+| export `alloc(len: i32) -> i32` | gives Eleonora room for `len` bytes (Eleonora writes inputs and API answers there) |
 | export `run(ptr: i32, len: i32) -> i64` | runs a command: the input is JSON at `ptr`; it returns `ptr << 32 \| len` of its output (JSON) |
-| import `eudora.call(method_ptr, method_len, params_ptr, params_len) -> i64` | an API call: the method's name and its params (JSON); returns `ptr << 32 \| len` of the answer, `{"result": …}` or `{"error": {"code", "message"}}` |
-| import `eudora.log(ptr, len)` | a line for the plugin's log |
+| import `eleonora.call(method_ptr, method_len, params_ptr, params_len) -> i64` | an API call: the method's name and its params (JSON); returns `ptr << 32 \| len` of the answer, `{"result": …}` or `{"error": {"code", "message"}}` |
+| import `eleonora.log(ptr, len)` | a line for the plugin's log |
+
+A plugin made before 2.0.0 (section `eudora-plugin`, module `eudora`) still installs and runs: Eleonora gives the module either name.
 
 **Anything else it imports, and it's refused at install.**
 
@@ -49,7 +51,7 @@ A WebAssembly module (`wasm32-unknown-unknown`, no WASI) with:
 - **Output**: `{"message": "3 invoices: 1001, 1002, 1007"}` (shown in the status bar), and / or `{"html": "<table>…</table>"}` (shown in a window, without scripts or web pictures), or `{"error": "…"}`.
 
 ### The API
-The same methods as for programs: `eudora-cli api methods` lists them with their permissions and parameters. For example:
+The same methods as for programs: `eleonora-cli api methods` lists them with their permissions and parameters. For example:
 - `v1.mail.headers {id}`
 - `v1.mail.body {id}`
 - `v1.mail.search {query}`
@@ -62,9 +64,9 @@ The same methods as for programs: `eudora-cli api methods` lists them with their
 // Cargo.toml: [lib] crate-type = ["cdylib"]; dependencies: serde_json
 // Build: cargo build --release --target wasm32-unknown-unknown
 // Then add the manifest section, e.g. with `wasm-tools metadata add` or a build script:
-//   the custom section "eudora-plugin" holding manifest.json.
+//   the custom section "eleonora-plugin" holding manifest.json.
 
-#[link(wasm_import_module = "eudora")]
+#[link(wasm_import_module = "eleonora")]
 extern "C" {
     fn call(method: *const u8, method_len: usize, params: *const u8, params_len: usize) -> u64;
     fn log(text: *const u8, len: usize);
@@ -112,9 +114,9 @@ pub extern "C" fn run(ptr: *const u8, len: usize) -> u64 {
 ```
 
 ## Installing and trying it
-1. In Eudora: **Tools ▸ Plugins… ▸ Install a plugin…**.
-2. Choose the `.wasm`; Eudora warns that it can't check who made it.
+1. In Eleonora: **Tools ▸ Plugins… ▸ Install a plugin…**.
+2. Choose the `.wasm`; Eleonora warns that it can't check who made it.
 3. Tick what the plugin may do in the grant window that follows.
 4. Then select some messages and run its command (Tools ▸ Plugins, or right-click).
 
-From the command line: `eudora-cli plugin install FILE`, `eudora-cli plugin list`, `eudora-cli plugin run ID COMMAND --ids 12,13`, `eudora-cli plugin remove ID`.
+From the command line: `eleonora-cli plugin install FILE`, `eleonora-cli plugin list`, `eleonora-cli plugin run ID COMMAND --ids 12,13`, `eleonora-cli plugin remove ID`.

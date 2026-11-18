@@ -3,7 +3,7 @@
 # the Developer ID as Eudora is (hardened runtime, Apple's timestamp), into dist/voice/. It's never
 # part of Eudora.app: a download of its own (core/voices.rs). Then, to make the signed list:
 #
-#   cargo run -p eudora-release -- voices --platform macos --program dist/voice/eudora-voice-macos --models <kokoro folder>
+#   cargo run -p eleonora-release -- voices --platform macos --program dist/voice/eudora-voice-macos --models <kokoro folder>
 #
 # (the Kokoro folder holds kokoro-v1.0.onnx and voices-v1.0.bin, as PlanetPDF's models/kokoro)
 
@@ -13,8 +13,8 @@ out="$root/dist/voice"
 mkdir -p "$out"
 
 echo "Step 1 of 3: Building (Apple silicon and Intel)"
-(cd "$root" && cargo build --release -p eudora-voice)
-(cd "$root" && cargo build --release --target x86_64-apple-darwin -p eudora-voice)
+(cd "$root" && cargo build --release -p eleonora-voice)
+(cd "$root" && cargo build --release --target x86_64-apple-darwin -p eleonora-voice)
 
 echo "Step 2 of 3: Joining them into one program"
 lipo -create "$root/target/release/eudora-voice" "$root/target/x86_64-apple-darwin/release/eudora-voice" -output "$out/eudora-voice-macos"
@@ -22,7 +22,7 @@ lipo -create "$root/target/release/eudora-voice" "$root/target/x86_64-apple-darw
 echo "Step 3 of 3: Signing"
 identity="$(security find-identity -v -p codesigning | sed -n 's/.*\([0-9A-F]\{40\}\) "Developer ID Application: .*/\1/p' | head -1)"
 if [ -n "$identity" ]; then
-    codesign --force --options runtime --timestamp --identifier net.planet.eudora.voice --sign "$identity" "$out/eudora-voice-macos"
+    codesign --force --options runtime --timestamp --identifier net.planet.eleonora.voice --sign "$identity" "$out/eudora-voice-macos"
     codesign --verify --strict "$out/eudora-voice-macos"
     echo "Signed with the Developer ID."
 else

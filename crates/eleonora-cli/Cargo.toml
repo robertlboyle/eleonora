@@ -1,0 +1,20 @@
+[package]
+name = "eleonora-cli"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+publish.workspace = true
+
+# The command-line tool: `eudora-cli` (the window is `eudora`).
+[[bin]]
+name = "eleonora-cli"
+path = "src/main.rs"
+
+[dependencies]
+anyhow = "1.0.104"
+chrono = "0.4.45"
+clap = { version = "4.6.7", features = ["derive", "env"] }
+eleonora-core = { version = "2.0.0", path = "../eleonora-core" }
+eleonora-testkit = { version = "2.0.0", path = "../eleonora-testkit" }
+serde_json = "1.0.151"

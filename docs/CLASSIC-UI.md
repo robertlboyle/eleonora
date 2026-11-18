@@ -1,6 +1,6 @@
-# Classic Eudora's UI, and what Eudora does with it
+# Classic Eudora's UI, and what Eleonora does with it
 
-An inventory of Eudora 7.1 for Windows (`Eudora_W_source\Eudora71\Eudora\EudoraRes.rc` and
+An inventory of Eudora 7.1 for Windows (`Eudora_W_source\Eudora71\Eleonora\EudoraRes.rc` and
 `resource.h`, from the Computer History Museum's BSD-licensed release), with a decision for
 each part:
 
@@ -18,7 +18,7 @@ The look and the keystrokes switch between **Classic**, identical to classic Eud
 
 - **Classic mode**: menus, names, shortcuts and icons identical to classic Eudora 7.1. Icons are
   **redrawn versions of classic Eudora's own icons** (from `Eudora_W_source`, as the program
-  icon was), including the status column's classic marks. **Every new Eudora feature is in
+  icon was), including the status column's classic marks. **Every new Eleonora feature is in
   Classic mode too**, placed where classic Eudora would have put it, with
   Classic-mode icons.
 - **Dropped features are removed entirely in both modes**: no grayed-out
@@ -26,10 +26,10 @@ The look and the keystrokes switch between **Classic**, identical to classic Eud
   Kerberos, plug-ins, MoodWatch…) finds why it was removed or deprecated and what replaces it,
   if anything. The help's "Removed features" page is built from this file's Drop rows.
 - **Modern mode**: the Keep / Modernize decisions in this file, Font Awesome icons, and
-  Eudora's own shortcuts where they differ (e.g. Ctrl+Shift+F = Sort with the Spam Filter;
+  Eleonora's own shortcuts where they differ (e.g. Ctrl+Shift+F = Sort with the Spam Filter;
   in Classic mode Ctrl+Shift+F stays Find Text).
-- Independent of the look (Eudora, Thunderbird-style, Lookout, Gmail-style, Yahoo-style): the
-  mode decides Eudora's own menus, keys and icons.
+- Independent of the look (Eleonora, Thunderbird-style, Lookout, Gmail-style, Yahoo-style): the
+  mode decides Eleonora's own menus, keys and icons.
 - **Ctrl+R = Reply** in both modes (Ctrl+Shift+R = Reply to All; classic's "Map Ctrl+R to Reply
   to All" option stays).
 
@@ -39,7 +39,7 @@ mapping comes later and doesn't depend on this file.
 ## Main menu bar
 
 Classic order: **File · Edit · Mailbox · Message · Transfer · Special · Tools · Window · Help**.
-Eudora keeps it.
+Eleonora keeps it.
 - **Mailbox** (open a mailbox) and **Transfer** (move the selected messages to a mailbox) are
   built from your folders at run time, as before, with a type-to-find field at the top for
   thousands of folders.
@@ -47,12 +47,12 @@ Eudora keeps it.
 ### File
 | Classic | Shortcut | Decision |
 |---|---|---|
-| New File | | Drop (Eudora edited plain text files) |
+| New File | | Drop (Eleonora edited plain text files) |
 | Open File… | Ctrl+O | Modernize: open an .eml / .mbox / .mbx file (viewed, or imported) |
 | Open Attachment | Enter | Keep |
 | Close | Ctrl+W | Keep (closes the tab or window) |
 | Save · Save As… | Ctrl+S | Keep (Save = save draft; Save As = .eml, .txt, .pdf) |
-| Save As Stationery | | Keep as **Save as Template** (Stationery is kept as the name in the Eudora skin) |
+| Save As Stationery | | Keep as **Save as Template** (Stationery is kept as the name in the Eleonora skin) |
 | Send Queued Messages | Ctrl+T | Keep (the Out mailbox: queued and scheduled sends) |
 | Check Mail | Ctrl+M | Keep (syncs every account now) |
 | Work Offline | | Keep |
@@ -78,8 +78,8 @@ Eudora keeps it.
 | Finish Address Book Entry | Ctrl+, | Keep (complete the name being typed) |
 | Insert Recipient ▸ | | Keep (your quick-recipient list) |
 | Find ▸ Find Text · Find Text Again | Ctrl+Shift+F · F3 / Ctrl+G | Keep (in the open message) |
-| Find ▸ Find Messages | Ctrl+F | Keep: **the boolean search over everything**, the heart of Eudora |
-| Find ▸ Search Web / Eudora / Mailbox / Mailfolder (for the selection) | | Keep |
+| Find ▸ Find Messages | Ctrl+F | Keep: **the boolean search over everything**, the heart of Eleonora |
+| Find ▸ Search Web / Eleonora / Mailbox / Mailfolder (for the selection) | | Keep |
 | Sort ▸ Status, Priority, Attachment, Label, Sender, Date, Size, Subject · Group by Subject | | Keep. Group by Subject becomes **Group by Conversation** (real threads) |
 | Sort ▸ Server Status | | Keep for POP accounts (left on server / to delete) |
 | Sort ▸ Mood · Junk | | Drop Mood (see MoodWatch); Junk kept |
@@ -106,7 +106,7 @@ Eudora keeps it.
 | Change ▸ Label ▸ None, Label1-7 | | Modernize: **Labels = categories**: any number, named and colored, synced as Outlook categories / Gmail labels / IMAP keywords |
 | Change ▸ Server Status ▸ Leave / Fetch / Delete / Fetch then Delete | | Keep for POP accounts |
 | Change ▸ Personality ▸ | | Keep: Personalities = your identities (accounts and their From addresses) |
-| Junk · Not Junk | Ctrl+Shift+J · Ctrl+Alt+J (Classic mode: Ctrl+J, as the classic option) | Keep (to / from Spam; teaches Eudora's spam filter: blacklist / whitelist + "like this" rules) |
+| Junk · Not Junk | Ctrl+Shift+J · Ctrl+Alt+J (Classic mode: Ctrl+J, as the classic option) | Keep (to / from Spam; teaches Eleonora's spam filter: blacklist / whitelist + "like this" rules) |
 | Delete · UnDelete · Purge Messages | Ctrl+D | Keep Delete / UnDelete (Trash); Purge = Empty Trash for a folder |
 
 ### Special
@@ -149,7 +149,7 @@ Eudora keeps it.
 | Tip of the Day | Drop |
 | Payment & Registration | Drop (free) |
 | Insert System Configuration | Modernize: Copy Diagnostic Information |
-| About Eudora… | Keep |
+| About Eleonora… | Keep |
 
 ## Keyboard shortcuts to keep (muscle memory)
 
@@ -189,11 +189,11 @@ From the `IDR_MAINFRAME` accelerator table:
 - **Message list** (`Mailbox`, `ImapMailbox`): Reply · Reply to All | Make Filter | Change Status / Priority / Label | Junk · Not Junk | Delete · UnDelete. *Keep*, plus Move to ▸ and Copy to ▸.
   - Change Server Status: kept for POP accounts.
   - Recalculate Junk Score kept as **Sort with the Spam Filter** / **Why? (Spam Filter)**. Dropped: IMAP Fetch ▸ / Remove Cached Contents (our library decides what's downloaded).
-- **Open message** (`Received Msgs`): Copy | Search Web / Eudora / Mailbox / Mailfolder | Transfer to | Reply / Reply All / Forward / Redirect | Make Filter | View Source | Send to Browser | Open Attachment With… / Save Attachment As… / Explore Attachment (*Show in Folder*) / Copy Attachment… / Delete Attachment… | Junk / Not Junk | Delete. *Keep*.
+- **Open message** (`Received Msgs`): Copy | Search Web / Eleonora / Mailbox / Mailfolder | Transfer to | Reply / Reply All / Forward / Redirect | Make Filter | View Source | Send to Browser | Open Attachment With… / Save Attachment As… / Explore Attachment (*Show in Folder*) / Copy Attachment… / Delete Attachment… | Junk / Not Junk | Delete. *Keep*.
 - **Composing** (`Comp Message`): Cut / Copy / Paste / Paste Special / Paste As Quotation | Search … | Attach File | Send Again | Change Queuing… (*Send Later…*) | Check Spelling. *Keep*.
 - **Out mailbox**: Send Immediately / Send Again | Make Filter | Change Queuing… | Change Status / Priority / Label | Delete. *Keep*, modernized as for the menus.
 - **Address book** (`Nickname`): New / Delete / Rename | Move To / Copy To | Add to / Remove from Recipient List | Add to / Remove from BossWatch List. *Keep*.
-- **System tray**: Exit | Minimize to Tray | Always Show Tray Icon | Work Offline | New Message | Check Mail | Open Eudora. *Keep* (macOS: the menu bar extra / Dock menu).
+- **System tray**: Exit | Minimize to Tray | Always Show Tray Icon | Work Offline | New Message | Check Mail | Open Eleonora. *Keep* (macOS: the menu bar extra / Dock menu).
 
 ## Options (Tools ▸ Options), in classic order
 
@@ -214,30 +214,30 @@ From the `IDR_MAINFRAME` accelerator table:
 | 13 | Styled Text | Formatting toolbar; send both plain and styled / styled only / plain only / ask; styled signature | Keep |
 | 14 | Spell Checking | Ignore capitalized / all caps / numbers / mixed case, doubled words, suggestions, as you type / on request, ignore quoted text, warn on send | Keep (a permissive spell library: Hunspell dictionaries) |
 | 15 | Auto-completion | Sources (history, address book, plug-ins), list only, drop-down, alphabetical, add From: of replied-to, delay, history size | Keep (sources: history, contacts, directory) |
-| 16 | Date Display | Local / sender's time zone; fixed or **age-sensitive** formats (RECENT / OLD / ANCIENT with hour limits) | **Keep, including age-sensitive dates**: a much-loved Eudora detail |
+| 16 | Date Display | Local / sender's time zone; fixed or **age-sensitive** formats (RECENT / OLD / ANCIENT with hour limits) | **Keep, including age-sensitive dates**: a much-loved Eleonora detail |
 | 17 | Labels | 7 colors | Modernize: categories (any number, synced; see Message ▸ Change ▸ Label) |
 | 18 | Getting Attention | Alert dialog, open mailbox, play a sound, filter report | Modernize: system notifications, sound, open mailbox, filter report |
 | 19 | Background Tasks | Task status columns, wait for N seconds idle before filtering, bring error / status window to front | Mostly drop (we filter as mail arrives, without blocking); keep "show the Activity window on errors" |
 | 20 | Automation | OLE automation, warn on auto-send | **Drop** (a scripting API may come much later) |
 | 21 | Extra Warnings | Delete unread / queued / unsent mail, delete N+ messages, delete from search results, no subject, message over N K, quit with queued mail, empty Trash, not the default mailer, launch a program, forward files outside the attachment folder, invalid server | Keep the useful ones: unread / unsent / N+ messages, no subject, big message, quit with queued mail, empty Trash, not the default mail app. Drop the launch / server ones |
-| 22 | MAPI | Eudora as the MAPI server (never / while running / always), MAPI attachments | Modernize: **be the default mail app** (mailto: and "Send to mail recipient" on Windows via Simple MAPI, macOS default mail app) |
+| 22 | MAPI | Eleonora as the MAPI server (never / while running / always), MAPI attachments | Modernize: **be the default mail app** (mailto: and "Send to mail recipient" on Windows via Simple MAPI, macOS default mail app) |
 | 23 | Advanced Network | Timeouts, buffer size, cache network info, unload Winsock | **Drop** |
 | 24 | Kerberos | Realm, service, POP port | **Drop** |
 | 25 | MoodWatch | Flag offensive mail ("on fire") and delay sending angry mail | **Comes back later** as a tone check before sending, with the built-in language model |
 | 26 | Statistics | Graph colors, series, reset | Later (Tools ▸ Statistics) |
 | 27 | Miscellaneous | Switch messages with arrows / Ctrl / Alt, empty Trash on exit, OK alerts after N s, turbo redirect, Return-Receipt-To, expand nicknames, auto-save every N minutes, hide address books from viruses | Keep: switch-message keys, empty Trash on exit, expand nicknames, auto-save drafts; drop the rest |
-| 28 | Junk Mail | Junk score threshold, address book = not junk, Not-Junked senders into the address book, Junk mailbox, never unread, ignore date, trim junk older than N days, warn | Modernize: Eudora's own spam filter (the project's design notes; the server's verdict is one signal); keep "contacts are never junk" (the whitelist), Not Junk whitelists the sender, empty Spam after N days |
+| 28 | Junk Mail | Junk score threshold, address book = not junk, Not-Junked senders into the address book, Junk mailbox, never unread, ignore date, trim junk older than N days, warn | Modernize: Eleonora's own spam filter (the project's design notes; the server's verdict is one signal); keep "contacts are never junk" (the whitelist), Not Junk whitelists the sender, empty Spam after N days |
 | 29 | Junk Mail Extras | Score of junked mail, trim threshold, Ctrl+J for Junk, delete fetched junk from server | Keep only "Ctrl+J for Junk" |
 | 30 | Content Concentrator | Collapse quoted / repeated text in preview and message window, multiple messages | Modernize: **collapse quoted text** and conversation view |
 | 31 | BossWatch | Warn when sending to more than N, on Reply All, outside / inside domain, color-code addresses | **Keep**: still very useful (external-recipient and reply-all warnings) |
 | 32 | Find Messages | Fast indexed search, index now, re-index, index progress, include deleted IMAP | Keep: our Tantivy index (always on), Rebuild Index…, progress in Activity |
 
-Eudora adds options classic didn't have: accounts (Microsoft 365, Gmail, IMAP), settings
-sync, the skin (Eudora / Thunderbird-style), the library location, the page and index memory
+Eleonora adds options classic didn't have: accounts (Microsoft 365, Gmail, IMAP), settings
+sync, the skin (Eleonora / Thunderbird-style), the library location, the page and index memory
 limits, attachments download days, the appearance (light / dark), remote images, and the
 importance flagging.
 
-## Filters (Tools ▸ Filters): classic model → Eudora rules
+## Filters (Tools ▸ Filters): classic model → Eleonora rules
 
 Classic filter:
 - **When to apply:** Incoming / Outgoing / Manual.
@@ -245,7 +245,7 @@ Classic filter:
 - **Up to five actions:** Make Status, Make Priority (incl. raise / lower), Make Label, Make Personality, Make Subject, Play Sound, Speak, Open, Print, Notify User, Notify Application, Forward To, Redirect To, Reply With, Server Options, Copy To, Transfer To, Junk, Skip Rest.
 - Filters run top to bottom; Skip Rest stops.
 
-Eudora keeps that model and its names, and lifts the limits:
+Eleonora keeps that model and its names, and lifts the limits:
 - any number of conditions, nested AND / OR / NOT;
 - a condition can be **any boolean search** (the same language as Find Messages);
 - any number of actions;

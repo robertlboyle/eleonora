@@ -1,0 +1,50 @@
+package net.planet.eleonora
+
+import android.content.Context
+import androidx.work.Constraints
+import androidx.work.ExistingPeriodicWorkPolicy
+import androidx.work.NetworkType
+import androidx.work.PeriodicWorkRequestBuilder
+import androidx.work.WorkManager
+import androidx.work.Worker
+import androidx.work.WorkerParameters
+import java.util.concurrent.TimeUnit
+
+/** Eleonora's Rust code (src/android.rs in the eleonora-app crate). */
+object EleonoraNative {
+    init {
+        System.loadLibrary("eleonora_app_lib")
+    }
+
+    /** One pass over every account: 0 done, 1 the app is open (it downloads itself), 2 failed. */
+    @JvmStatic
+    external fun checkOnce(context: Context, dataDir: String): Int
+}
+
+/**
+ * Checks for new mail while Eleonora is closed: Android runs it about every 15 minutes when
+ * there's a network (polling, as decided 2026-10-27; WorkManager chooses the moment to spare
+ * the battery). When Eleonora is open, its own download is already checking.
+ */
+class CheckWorker(context: Context, params: WorkerParameters) : Worker(context, params) {
+    override fun doWork(): Result = try {
+        when (EleonoraNative.checkOnce(applicationContext, applicationContext.dataDir.absolutePath)) {
+            2 -> Result.retry()
+            else -> Result.success()
+        }
+    } catch (e: Throwable) {
+        Result.retry()
+    }
+
+    companion object {
+        private const val NAME = "eleonora-check-mail"
+
+        /** Asks Android for the periodic check (kept if it's already asked for). */
+        fun schedule(context: Context) {
+            val request = PeriodicWorkRequestBuilder<CheckWorker>(15, TimeUnit.MINUTES)
+                .setConstraints(Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build())
+                .build()
+            WorkManager.getInstance(context).enqueueUniquePeriodicWork(NAME, ExistingPeriodicWorkPolicy.KEEP, request)
+        }
+    }
+}

@@ -102,4 +102,4 @@ if ($Android) {
 
 Write-Output ''
 Write-Output 'Done. Open a new PowerShell window (so the new PATH applies), then:'
-Write-Output '  cargo build --release -p eudora-app -p eudora-cli'
+Write-Output '  cargo build --release -p eleonora-app -p eleonora-cli'

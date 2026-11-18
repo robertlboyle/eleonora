@@ -1820,6 +1820,158 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "252afb9ae5eaa683babdc6a068b3f5726eb19e05070c731f9b2a23a7c3e8ed34"
 
 [[package]]
+name = "eleonora-app"
+version = "2.0.0"
+dependencies = [
+ "base64 0.23.1",
+ "block2",
+ "chrono",
+ "dispatch2",
+ "drag",
+ "eleonora-core",
+ "jni 0.22.4",
+ "mail-parser",
+ "ndk-context",
+ "objc2",
+ "objc2-foundation",
+ "rusqlite",
+ "rustls-platform-verifier",
+ "serde",
+ "serde_json",
+ "tauri",
+ "tauri-build",
+ "tauri-plugin-opener",
+ "tempfile",
+]
+
+[[package]]
+name = "eleonora-cli"
+version = "2.0.0"
+dependencies = [
+ "anyhow",
+ "chrono",
+ "clap",
+ "eleonora-core",
+ "eleonora-testkit",
+ "serde_json",
+]
+
+[[package]]
+name = "eleonora-core"
+version = "2.0.0"
+dependencies = [
+ "aho-corasick",
+ "apple-native-keyring-store",
+ "argon2",
+ "base64 0.23.1",
+ "blake3",
+ "block2",
+ "cfb",
+ "chrono",
+ "crossbeam-channel",
+ "dispatch2",
+ "eleonora-testkit",
+ "encoding_rs",
+ "getrandom 0.4.3",
+ "hickory-resolver",
+ "image",
+ "imap",
+ "keyring",
+ "keyring-core",
+ "lopdf",
+ "mail-parser",
+ "memchr",
+ "memmap2",
+ "native-tls",
+ "objc2",
+ "objc2-app-kit",
+ "objc2-foundation",
+ "ocrs",
+ "psl",
+ "quick-xml",
+ "rayon",
+ "ring",
+ "rten",
+ "rusqlite",
+ "rustls",
+ "rustls-platform-verifier",
+ "serde",
+ "serde_json",
+ "sha2 0.11.0",
+ "tantivy",
+ "tempfile",
+ "thiserror 2.0.21",
+ "tokio",
+ "tts",
+ "ureq",
+ "url",
+ "uuid",
+ "walkdir",
+ "wasmtime",
+ "wat",
+ "windows 0.62.2",
+ "zstd 0.14.0",
+]
+
+[[package]]
+name = "eleonora-release"
+version = "2.0.0"
+dependencies = [
+ "anyhow",
+ "base64 0.23.1",
+ "chrono",
+ "ring",
+ "serde_json",
+ "sha2 0.11.0",
+]
+
+[[package]]
+name = "eleonora-testkit"
+version = "2.0.0"
+dependencies = [
+ "chrono",
+ "rayon",
+ "serde",
+ "serde_json",
+]
+
+[[package]]
+name = "eleonora-voice"
+version = "2.0.0"
+dependencies = [
+ "base64 0.22.1",
+ "misaki-rs",
+ "rten",
+ "rten-tensor",
+ "serde",
+ "serde_json",
+]
+
+[[package]]
+name = "eleonora-web"
+version = "2.0.0"
+dependencies = [
+ "argon2",
+ "axum",
+ "axum-server",
+ "base64 0.23.1",
+ "chrono",
+ "ciborium",
+ "clap",
+ "eleonora-core",
+ "getrandom 0.4.3",
+ "rcgen",
+ "ring",
+ "rustls",
+ "rustls-pki-types",
+ "serde",
+ "serde_json",
+ "sha2 0.11.0",
+ "tempfile",
+ "tokio",
+]
+
+[[package]]
 name = "embed-resource"
 version = "3.0.12"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1917,158 +2069,6 @@ checksum = "39cab71617ae0d63f51a36d69f866391735b51691dbda63cf6f96d042b63efeb"
 dependencies = [
  "libc",
  "windows-sys 0.61.2",
-]
-
-[[package]]
-name = "eudora-app"
-version = "1.0.1"
-dependencies = [
- "base64 0.23.1",
- "block2",
- "chrono",
- "dispatch2",
- "drag",
- "eudora-core",
- "jni 0.22.4",
- "mail-parser",
- "ndk-context",
- "objc2",
- "objc2-foundation",
- "rusqlite",
- "rustls-platform-verifier",
- "serde",
- "serde_json",
- "tauri",
- "tauri-build",
- "tauri-plugin-opener",
- "tempfile",
-]
-
-[[package]]
-name = "eudora-cli"
-version = "1.0.1"
-dependencies = [
- "anyhow",
- "chrono",
- "clap",
- "eudora-core",
- "eudora-testkit",
- "serde_json",
-]
-
-[[package]]
-name = "eudora-core"
-version = "1.0.1"
-dependencies = [
- "aho-corasick",
- "apple-native-keyring-store",
- "argon2",
- "base64 0.23.1",
- "blake3",
- "block2",
- "cfb",
- "chrono",
- "crossbeam-channel",
- "dispatch2",
- "encoding_rs",
- "eudora-testkit",
- "getrandom 0.4.3",
- "hickory-resolver",
- "image",
- "imap",
- "keyring",
- "keyring-core",
- "lopdf",
- "mail-parser",
- "memchr",
- "memmap2",
- "native-tls",
- "objc2",
- "objc2-app-kit",
- "objc2-foundation",
- "ocrs",
- "psl",
- "quick-xml",
- "rayon",
- "ring",
- "rten",
- "rusqlite",
- "rustls",
- "rustls-platform-verifier",
- "serde",
- "serde_json",
- "sha2 0.11.0",
- "tantivy",
- "tempfile",
- "thiserror 2.0.21",
- "tokio",
- "tts",
- "ureq",
- "url",
- "uuid",
- "walkdir",
- "wasmtime",
- "wat",
- "windows 0.62.2",
- "zstd 0.14.0",
-]
-
-[[package]]
-name = "eudora-release"
-version = "1.0.1"
-dependencies = [
- "anyhow",
- "base64 0.23.1",
- "chrono",
- "ring",
- "serde_json",
- "sha2 0.11.0",
-]
-
-[[package]]
-name = "eudora-testkit"
-version = "1.0.1"
-dependencies = [
- "chrono",
- "rayon",
- "serde",
- "serde_json",
-]
-
-[[package]]
-name = "eudora-voice"
-version = "1.0.1"
-dependencies = [
- "base64 0.22.1",
- "misaki-rs",
- "rten",
- "rten-tensor",
- "serde",
- "serde_json",
-]
-
-[[package]]
-name = "eudora-web"
-version = "1.0.1"
-dependencies = [
- "argon2",
- "axum",
- "axum-server",
- "base64 0.23.1",
- "chrono",
- "ciborium",
- "clap",
- "eudora-core",
- "getrandom 0.4.3",
- "rcgen",
- "ring",
- "rustls",
- "rustls-pki-types",
- "serde",
- "serde_json",
- "sha2 0.11.0",
- "tempfile",
- "tokio",
 ]
 
 [[package]]

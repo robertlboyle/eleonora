@@ -1,4 +1,4 @@
-"""Makes Eudora's own new-mail sounds (crates/eudora-app/ui/sounds/*.wav), synthesized here from
+"""Makes Eudora's own new-mail sounds (crates/eleonora-app/ui/sounds/*.wav), synthesized here from
 plain tones, so they are Eudora's and no one else's. Classic Eudora's own sounds
 (eudora.wav, eudora-older.wav) are copied from its released source, not made here.
 
@@ -13,7 +13,7 @@ import wave
 from pathlib import Path
 
 RATE = 44100
-OUT = Path(__file__).resolve().parent.parent / "crates" / "eudora-app" / "ui" / "sounds"
+OUT = Path(__file__).resolve().parent.parent / "crates" / "eleonora-app" / "ui" / "sounds"
 
 
 def note(freq, start, length, volume=1.0, decay=6.0, partials=((1, 1.0),), attack=0.004):

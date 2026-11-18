@@ -1,0 +1,115 @@
+<section id="new-message" data-title="Writing a new message" data-index="new message; compose; Ctrl+N; message window; To; Cc; Bcc; subject; recipients; address separators">
+<h1>Writing a new message</h1>
+<p>Choose <span class="ui">Message ▸ New Message</span> (<kbd>Ctrl</kbd>+<kbd>N</kbd>) or <span class="ui">New</span> on the toolbar. A message window opens in the main window's look.</p>
+<ol>
+<li>Choose who it's <b>From</b> (see <a href="#from">Sending from another address</a>).</li>
+<li>Type the people in <b>To</b>, <b>Cc</b>, and <b>Bcc</b>. Separate them with commas, semicolons, or spaces. Eleonora suggests addresses as you type (see <a href="#completion">Address completion</a>).</li>
+<li>Type the <b>Subject</b> and the message.</li>
+<li>Choose <span class="ui">Send</span> (<kbd>Ctrl</kbd>+<kbd>E</kbd>, <span class="ui">Message ▸ Send Immediately</span>).</li>
+</ol>
+<p>The window closes at once; the message goes into the <b>Out</b> mailbox and is sent in the background. The status bar of the main window says when it went. A message that can't be sent (no connection, a server refusing it) waits in Out and is tried again.</p>
+<p>The people in Bcc receive the message, but their addresses aren't in what's sent.</p>
+</section>
+
+<section id="reply-forward" data-title="Replying, forwarding, redirecting" data-index="reply; reply to all; forward; redirect; send again; quoting; Ctrl+R; Ctrl+Shift+R; forward as attachment; forward several; bottom posting; top posting; > quoting; classic quoting; Shift Reply; Ctrl Reply">
+<h1>Replying, forwarding, redirecting</h1>
+<table>
+<tr><th>Reply</th><td><kbd>Ctrl</kbd>+<kbd>R</kbd></td><td>To the sender (or the address they asked replies to go to), with the original quoted under "At 05:29 PM 12/31/1999, Ann Smith wrote:". The reply comes from the address the message was sent to.</td></tr>
+<tr><th>Reply to All</th><td><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>R</kbd></td><td>To the sender and everyone else on the message except you; Cc stays Cc.</td></tr>
+<tr><th>Forward</th><td></td><td>"Fwd:" with the original and its attachments. Untick any attachment you don't want to send along. With several messages selected, each is attached whole to one message.</td></tr>
+<tr><th>Redirect</th><td></td><td>Sends the message on as it is, from you "by way of" the original sender; replies go to the original sender.</td></tr>
+<tr><th>Send Again</th><td></td><td>A new message with the same recipients, subject, text, and attachments, for a message of yours that needs sending again.</td></tr>
+</table>
+<p>Once sent, the original is marked replied, forwarded, or redirected, on the server too (Outlook and your phone show it). Mail you answer in Outlook, on your phone, or in webmail is marked in Eleonora too: Microsoft 365 is asked about its newest messages every few minutes, an IMAP server about each folder it checks. (Gmail keeps no such mark.)</p>
+<h2 id="quoting">How replies quote the original</h2>
+<p><span class="ui">Settings ▸ Mail ▸ Replies</span> chooses one of two ways:</p>
+<ul>
+<li><b>Write above the original</b> (the usual way): the original is quoted below, with a line down its side, and the cursor waits above it. Your signature goes between your words and the original.</li>
+<li><b>Classic Eudora</b>: the reply is plain text, with "&gt; " before each line of the original ("&gt;&gt; " for lines it had quoted already, long lines wrapped first), and you write <b>below</b> it (bottom posting). The cursor waits under the quote, and your signature goes at the end.</li>
+</ul>
+<p><b>Just this once the other way:</b> hold <kbd>Shift</kbd> or <kbd>Ctrl</kbd> while you click <b>Reply</b> or <b>Reply to All</b> (on the toolbar, in the right-click menu, or on the message). The keyboard shortcuts always use the way chosen in Settings.</p>
+<p>A classic reply is plain text. Switch it to HTML with the message window's <a href="#formatting">HTML / Plain Text</a> switch if you want to format it: the "&gt;" lines stay as they are.</p>
+<p>In <span class="ui">Settings ▸ General ▸ Look</span> you can map <kbd>Ctrl</kbd>+<kbd>R</kbd> to Reply to All, as classic Eudora allowed.</p>
+<p>In the Gmail-style look, replies and forwards are written in the message's place rather than in a window.</p>
+</section>
+
+<section id="from" data-title="Sending from another address" data-index="From; personalities; identities; send as; send on behalf; shared mailbox; alias; which account sends">
+<h1>Sending from another address</h1>
+<p>Click the <b>From</b> line to choose any address you can send from: each account's address and each shared mailbox. The message is sent through the account that owns the address: Microsoft 365 or Gmail through its own connection, other accounts through their outgoing (SMTP) server. A copy goes into that account's Sent folder.</p>
+<p>Classic Eudora personalities are listed too, grayed out, when no account can send as them.</p>
+<p><span class="ui">File ▸ Accounts…</span> (Classic: <span class="ui">Tools ▸ Personalities…</span>) opens Settings at its Accounts page, where each account's address and name are set.</p>
+</section>
+
+<section id="completion" data-title="Address completion" data-index="autocomplete; address completion; suggestions; correct a name; wrong name; remembered name; directory; address book; recent senders">
+<h1>Address completion</h1>
+<p>After two letters in To, Cc, or Bcc, Eleonora suggests people. Use <kbd>↑</kbd> / <kbd>↓</kbd>, then <kbd>Enter</kbd> or <kbd>Tab</kbd> to pick one; <kbd>Esc</kbd> closes the list. Suggestions come from:</p>
+<ol>
+<li>people you've written to (most often first), and people who've written to you;</li>
+<li>your <a href="#contacts">Address Book</a>;</li>
+<li>your organization's Microsoft 365 directory, added a moment later when it answers.</li>
+</ol>
+<p><span class="ui">Settings ▸ General ▸ Address completion</span> turns the first two sources on or off. Your own addresses are never suggested.</p>
+<p><b>Correcting a name:</b> if a suggestion has someone's name wrong (say "Mikee Jones &lt;mike@jones.com&gt;"), fix it in To, Cc, or Bcc ("Mike Jones &lt;mike@jones.com&gt;") and send the message. From then on Eleonora suggests the name as you wrote it. The correction stays even when Eleonora rereads your mail for its suggestions, and travels to your other computers with your settings. A bare address with no name changes nothing. (The Address Book itself isn't changed: edit the contact there to change it everywhere.)</p>
+</section>
+
+<section id="formatting" data-title="Formatting, plain text, and pictures" data-index="HTML; plain text; mailing list; listserv; base64; character set; format; strikethrough; highlight; Ctrl+Shift+X; Ctrl+Shift+H; right-click formatting; remove formatting; HTML / Plain Text switch; lose formatting; bold; italic; link; list; paste picture; screenshot; inline image; priority">
+<h1>Formatting, plain text, and pictures</h1>
+<p>The <b>HTML / Plain Text</b> switch on the message window's toolbar chooses how the message is sent, any time before you send it. The half in use is filled in. With the keyboard, <kbd>Tab</kbd> to it and use the arrow keys.</p>
+<ul>
+<li><b>HTML</b>: formatted, with bold, italic, underline, strikethrough, highlight, lists, links, and pictures in the text. Each message goes with a plain-text copy for mail programs that show only text.</li>
+<li><b>Plain Text</b>: words only, which every mail program shows the same way. The formatting buttons rest while it's chosen. The message is sent as text alone, with no HTML in it.</li>
+</ul>
+<p><b>For mailing lists:</b> many list servers refuse text sent in base64, an encoding meant for files. Eleonora sends text the way lists accept it, in the simplest character set the words fit: plain ASCII when they can be (the invisible no-break spaces the editor makes become ordinary spaces), else the Western European set (curly quotes, dashes, accents), else UTF-8, always as readable text, never base64. A list that takes only plain text needs the message sent as <b>Plain Text</b>.</p>
+<p><b>Formatting text:</b> choose the words, then use the toolbar's buttons, the keys, or the right-click menu:</p>
+<table>
+<tr><th>Bold</th><td><kbd>Ctrl</kbd>+<kbd>B</kbd></td></tr>
+<tr><th>Italic</th><td><kbd>Ctrl</kbd>+<kbd>I</kbd></td></tr>
+<tr><th>Underline</th><td><kbd>Ctrl</kbd>+<kbd>U</kbd></td></tr>
+<tr><th>Strikethrough</th><td><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>X</kbd></td></tr>
+<tr><th>Highlight</th><td><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>H</kbd> (yellow; the same again takes it off)</td></tr>
+</table>
+<p>Each button shows whether its formatting is on where the cursor is. <b>Right-click</b> in the text (or press <kbd>Shift</kbd>+<kbd>F10</kbd> or the Menu key) for Cut, Copy, Paste, <b>Paste as Plain Text</b> (<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>V</kbd>: the words only, taking the formatting where the cursor is), every formatting above, Bulleted and Numbered List, Make Hyperlink…, Remove Formatting, Select All, and Check Spelling. In a plain-text message the formatting items are grayed, with <b>Switch to HTML to format…</b> below them.</p>
+<p><b>Switching to plain text loses the formatting, so Eleonora warns first.</b> It lists exactly what would go (bold, italic, or underlined text; fonts, sizes, and colors; lists; tables; pictures in the text; clickable links) and lets you keep HTML. Quoted parts become "&gt; " lines, and each link's address is kept in the text after its words. Switching back to HTML doesn't bring the lost formatting back. A message with nothing but words switches without asking.</p>
+<p>A reply to a plain-text message starts as plain text, as does a reply quoted <a href="#reply-forward">classic Eudora's way</a>.</p>
+<p><b>Pasting a picture</b> (a screenshot, say): in an HTML message it goes in where the cursor is. In a plain-text message Eleonora asks whether to switch to HTML and paste it, or attach it as a file. Pictures in the text are sent as parts of the message, which every mail program shows.</p>
+<p><b>Priority</b> marks the message highest to lowest for the people who receive it.</p>
+</section>
+
+<section id="attaching" data-title="Attaching files" data-index="attach; attach file; Ctrl+H; drag and drop; attachment size">
+<h1>Attaching files</h1>
+<p>Choose <span class="ui">Message ▸ Attach File…</span> (<kbd>Ctrl</kbd>+<kbd>H</kbd>) or drag files into the message window. Each attached file is listed; × takes it off. Files pasted into the window are attached too.</p>
+</section>
+
+<section id="signatures" data-title="Signatures" data-index="signature; signatures; Tools Signatures; default signature">
+<h1>Signatures</h1>
+<p><span class="ui">Tools ▸ Signatures…</span> keeps as many named signatures as you like, with formatting. Choose which one each From address starts with, and one for any other address.</p>
+<p>A new message ends with the signature; a reply or forward has it right under where you type, above the original. Changing From swaps the signature, unless you edited it. The message window's <b>Signature</b> menu picks another or none. Signatures travel to your other computers with <a href="#sync">sync</a>.</p>
+</section>
+
+<section id="spelling" data-title="Checking spelling" data-index="spelling; spell check; Ctrl+6; Add to Dictionary; dictionary">
+<h1>Checking spelling</h1>
+<p><span class="ui">Edit ▸ Check Spelling</span> (<kbd>Ctrl</kbd>+<kbd>6</kbd>) or the <b>Spelling</b> button checks the message with your computer's own spell checker, in your language. For each word: <b>Change</b>, <b>Ignore</b>, <b>Ignore All</b>, or <b>Add</b> (to your computer's dictionary, which other programs share). The quoted original and the signature are skipped.</p>
+</section>
+
+<section id="dictation" data-title="Dictation" data-index="dictation; voice typing; microphone; speak">
+<h1>Dictation</h1>
+<p>The 🎤 button in the message window starts your computer's voice typing where the cursor is: on Windows, Windows' voice typing; on the Mac, the Mac's dictation. Speak, and the words appear in the message.</p>
+</section>
+
+<section id="drafts" data-title="Drafts and autosave" data-index="draft; drafts; save draft; Ctrl+S; autosave; crash; Don't save">
+<h1>Drafts and autosave</h1>
+<p>While you write, Eleonora saves the message to Drafts every 20 seconds, silently, so nothing is lost if the computer or Eleonora stops. <span class="ui">File ▸ Save Draft</span> (<kbd>Ctrl</kbd>+<kbd>S</kbd>) saves at once.</p>
+<p><span class="ui">File ▸ Drafts…</span> lists your drafts; open one to carry on. Closing a message asks whether to keep it as a draft; <b>Don't save</b> removes the autosaved copy too.</p>
+</section>
+
+<section id="send-later" data-title="Send Later and the Out mailbox" data-index="send later; queue; queuing; scheduled send; Out mailbox; outbox; Send Queued Messages; Ctrl+T; Ctrl+0">
+<h1>Send Later and the Out mailbox</h1>
+<p>In the message window choose <span class="ui">Send Later…</span> (<span class="ui">Message ▸ Change ▸ Queuing…</span> in Classic mode) and pick a date and time, or <b>In an hour</b> or <b>Tomorrow 8 AM</b>. The message waits in the <b>Out</b> mailbox and is sent by itself when its time comes, while Eleonora is open. If Eleonora was closed at that time, it goes as soon as Eleonora starts.</p>
+<p><span class="ui">Mailbox ▸ Out</span> (<kbd>Ctrl</kbd>+<kbd>0</kbd>) lists what waits: <b>Change</b> makes it a draft again; <b>Send now</b> sends it. <span class="ui">File ▸ Send Queued Messages</span> (<kbd>Ctrl</kbd>+<kbd>T</kbd>) sends everything waiting.</p>
+<p>A message is never sent twice: if sending was cut off partway, Eleonora says so and leaves it for you to check.</p>
+</section>
+
+<section id="printing" data-title="Printing" data-index="print; Ctrl+P">
+<h1>Printing</h1>
+<p><span class="ui">File ▸ Print…</span> (<kbd>Ctrl</kbd>+<kbd>P</kbd>) prints the message you're reading, with its From, To, Date, and Subject lines, through your computer's print window. Messages always print in light colors.</p>
+</section>

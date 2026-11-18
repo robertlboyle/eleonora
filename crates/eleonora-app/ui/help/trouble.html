@@ -1,0 +1,97 @@
+<section id="trouble" data-title="Troubleshooting" data-index="problems; troubleshooting; not working; help; error">
+<h1>Troubleshooting</h1>
+<p>Start with <a href="#activity">Activity</a> (click the status bar): it shows what every background job did last, what's waiting, and the download's latest lines, which usually say what went wrong.</p>
+<p>The topics below cover the usual problems. If none fits, see <a href="#feedback">Reporting a problem</a>.</p>
+</section>
+
+<section id="trouble-folder-move" data-title="Eleonora couldn't finish moving its folder" data-index="Eudora folder; Eudora 27 folder; renamed from Eudora; folder move; couldn't move; rename; attachment open; file in use; Access is denied; moving the library">
+<h1>Eleonora couldn't finish moving its folder</h1>
+<p>Before version 2.0.0 Eleonora was called <b>Eudora</b> and kept your mail in a folder of that name (<b>Eudora 27</b> before version 1.0.0). The first time Eleonora starts, it moves that folder to <b>Eleonora</b> in one step, however much mail is in it, and your saved passwords with it. Windows won't move a folder while another program has a file in it open, usually an attachment you opened in a PDF viewer, Word, or Excel.</p>
+<p>When that happens Eleonora says which programs (and which files) are in the way, and keeps working from the old folder: your mail, settings, and passwords are all there and nothing is lost. To finish the move:</p>
+<ol>
+<li>Close the files it names (or the programs).</li>
+<li>Choose <b>Restart Eleonora</b> in its message (or close Eleonora and start it again). The folder moves as it starts.</li>
+</ol>
+<p>Choose <b>Later</b> to go on as you are: Eleonora tries again every time it starts. From the command line, <code>eleonora-cli</code> says the same and names the programs. The Mac and Linux move the folder whatever is open in it.</p>
+<h2 id="trouble-library-from-eudora">A folder named "Library from Eudora"</h2>
+<p>If an older Eudora is still on this computer and runs after Eleonora has moved the folder, it makes a new <b>Eudora</b> folder of its own. Eleonora tidies that up each time it starts, and always keeps using its own library: anything the old Eudora left there moves into Eleonora's folder, and the old folder goes. If the old Eudora made a library with mail or accounts in it, nothing is deleted: it's kept inside Eleonora's folder as <b>Library from Eudora</b> with the date and time, and listed in <code>libraries-from-eudora.txt</code> beside it. To look at it, start Eleonora with that folder named; delete it once you no longer need it. An empty one is simply removed. Uninstalling the older Eudora stops it happening again.</p>
+</section>
+
+<section id="trouble-no-mail"data-title="New mail isn't arriving" data-index="no new mail; mail not arriving; download stopped; waiting for the network; not checking; stuck">
+<h1>New mail isn't arriving</h1>
+<ol>
+<li>Look at the status bar. "Waiting for the network" means the connection dropped; Eleonora carries on by itself once it's back.</li>
+<li>Is it paused or stopped? The status bar then shows <b>▶ Resume</b>. Is <span class="ui">File ▸ Work Offline</span> on (an <b>Offline</b> badge)?</li>
+<li>Choose <span class="ui">File ▸ Check Mail</span> (<kbd>Ctrl</kbd>+<kbd>M</kbd>).</li>
+<li>Is the account checked rarely? See <span class="ui">Check every</span> in the Accounts settings.</li>
+<li>Was the mail sorted out of the Inbox? Look in <b>Other Recent Mail</b>, and use <span class="ui">Special ▸ Why? (Spam Filter)</span> on it.</li>
+<li>"Still working… (a long step)" means the download is busy with something large; it's not stuck. "Stopped" means it stopped unexpectedly; Eleonora starts it again by itself.</li>
+<li>For a Microsoft or Google account that says it needs signing in, choose <span class="ui">Sign in to Microsoft 365 again…</span> or add the Google account again.</li>
+</ol>
+</section>
+
+<section id="trouble-signin" data-title="Sign-in and password problems" data-index="sign in failed; password rejected; app password; authentication failed; consent; administrator approval; Keychain asks; IMAP login">
+<h1>Sign-in and password problems</h1>
+<ul>
+<li><b>IMAP or SMTP refuses your password</b>: many providers need an <b>app password</b> made on their website (Gmail, Yahoo, iCloud, Outlook.com). Microsoft and Google accounts should be added with Sign in with Microsoft / Google instead.</li>
+<li><b>Microsoft says an administrator must approve Eleonora</b>: your organization allows only approved apps; ask its IT department to approve "Eleonora".</li>
+<li><b>Changes don't reach Microsoft 365</b> (Activity shows them waiting): choose <span class="ui">Sign in to Microsoft 365 again…</span>; the Accounts settings show what Eleonora may do on the server.</li>
+<li><b>Encryption errors</b> with an old mail server: the error names the next level to try; see <a href="#add-imap">Ports and security</a>.</li>
+<li><b>Google sign-in stops after a week</b>: while Eleonora's Google connection is in testing, Google asks you to sign in again every 7 days.</li>
+</ul>
+</section>
+
+<section id="trouble-pop3" data-title="POP3 mail isn't coming in" data-index="POP3 not working; POP3 error; mailbox in use; mailbox locked; IN-USE; refused the user name or password; UIDL; AUTH PLAIN; pop server">
+<h1>POP3 mail isn't coming in</h1>
+<p>When a POP3 account has trouble, the error in Activity (and from <span class="ui">Test</span> in its account window) now says what the server itself answered.</p>
+<ul>
+<li><b>“The mailbox is in use by another program”</b>: most POP3 servers let only one program read a mailbox at a time. Another computer's Eleonora, a phone, or another mail program set up for the same account by POP3 has it open, or a check is still finishing. Eleonora waits and tries again by itself. If it keeps happening, give the computers different check times (Settings ▸ Accounts ▸ Check every), or use IMAP on all but one of them.</li>
+<li><b>“Refused the user name or password”</b>, with the server's words: check the password (many providers want an <b>app password</b> made on their website: Gmail, Yahoo, AOL), the user name (some servers want the whole address, others only the part before the @), and that POP3 is turned on for the account (Gmail: Settings ▸ Forwarding and POP/IMAP ▸ Enable POP). Eleonora also tries the other common way to sign in (AUTH PLAIN) before giving up.</li>
+<li><b>The server can't be reached</b>: the POP3 server Eleonora guessed (pop.<i>your domain</i>) may be wrong. Your provider's help page names it; it's often <code>mail.</code><i>your domain</i>. Port 995 with SSL/TLS, or 110 with STARTTLS.</li>
+<li><b>Old servers</b> without the UIDL command are read too: Eleonora tells their messages apart by their headers.</li>
+<li><b>Mail on two computers</b>: POP3 keeps nothing on the server about what you've read or filed. To read the same account on several computers or a phone, IMAP is better.</li>
+</ul>
+</section>
+
+<section id="trouble-sending" data-title="A message won't send" data-index="can't send; stuck in Out; sending failed; SMTP error; send as refused">
+<h1>A message won't send</h1>
+<p>Messages that can't go wait in <span class="ui">Mailbox ▸ Out</span> and are tried again after 1, 2, 4… up to 60 minutes. The main window's status bar says why each failed.</p>
+<ul>
+<li>A bad address or From is caught before sending, in the message's own window.</li>
+<li>Is <span class="ui">Work Offline</span> on?</li>
+<li>Sending from a shared mailbox needs Send As or Send on Behalf rights given by your administrator.</li>
+<li>A send cut off partway is never repeated by itself, so the message isn't sent twice: check the recipient got it, then use Send now in Out if not.</li>
+</ul>
+</section>
+
+<section id="trouble-missing" data-title="I can't find a message" data-index="missing message; lost message; where did it go; deleted; moved by rules; sorted away; not in Inbox">
+<h1>I can't find a message</h1>
+<ul>
+<li>Search for it: the search covers every account, folder, and year.</li>
+<li>Look in <b>Other Recent Mail</b>: it lists what was sorted out of the Inbox lately.</li>
+<li>Select it and choose <span class="ui">Special ▸ Why? (Spam Filter)</span> to see why it went where it did; <a href="#activity">Activity</a> ▸ Details shows what the rules and the spam filter did, message by message.</li>
+<li>Look in the Trash (Deleted Items), and use <span class="ui">Edit ▸ Undo</span> right after a mistaken move.</li>
+<li>A fraud's links are switched off on purpose; see <a href="#fraud">Fraud and phishing</a>.</li>
+</ul>
+</section>
+
+<section id="trouble-slow" data-title="Eleonora is slow, or uses a lot of space" data-index="slow; performance; disk space; library size; big library; space used; memory">
+<h1>Eleonora is slow, or uses a lot of space</h1>
+<ul>
+<li>The first download of a big mailbox takes hours; newest mail comes first, and the window stays usable.</li>
+<li>Give Eleonora more memory: <a href="#speed">Speed settings</a>.</li>
+<li>Run maintenance: <span class="ui">Settings ▸ Speed and maintenance ▸ Run Maintenance Now</span>.</li>
+<li>The library holds every message's original bytes, compressed, plus the search indexes. Online Archive mail also keeps Microsoft's own copy of each item, which you can turn off: see <a href="#keep-originals">Keeping original messages exactly</a>. <span class="ui">Help ▸ Statistics…</span> shows where the space goes.</li>
+<li>Never keep the library in Dropbox, OneDrive, or another syncing folder.</li>
+</ul>
+</section>
+
+<section id="trouble-sorting" data-title="The spam filter sorted something wrongly" data-index="wrong folder; false positive; good mail in spam; spam in inbox; misfiled; Not Spam">
+<h1>The spam filter sorted something wrongly</h1>
+<ul>
+<li>Good mail in Spam: <b>Not Spam</b> (<kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>J</kbd>) puts the sender on your whitelist and moves it back.</li>
+<li>Spam in the Inbox: <b>Spam</b> (<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>J</kbd>).</li>
+<li>Both teach the filter. To change where a kind of mail goes, see <a href="#mail-filter-rules">Mail Filter Rules</a>: switch a rule off, or give it exceptions.</li>
+<li>A rule of yours above the spam filter that stops ("Skip the rest") keeps the spam filter from those messages, by design.</li>
+</ul>
+</section>
